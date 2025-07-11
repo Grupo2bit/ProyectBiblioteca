@@ -8,7 +8,7 @@ import routerSolicitarPrestamos from "./routers/routerSolicitarPrestamo.js";
 import routerMultas from './routers/routerMultas.js';
 import routerLibro from "./routers/routerLibro.js";
 import routerResena from "./routers/routerResena.js";
-
+import routerNotificaciones from "./routers/routerNotificaciones.js";
 
 const servidor = express();//para realizar la conexion con la constante servidor 
 
@@ -21,6 +21,7 @@ servidor.use('/prestamos', routerPrestamos);
 servidor.use('/solicitarPrestamos', routerSolicitarPrestamos);
 servidor.use('/multas', routerMultas);
 servidor.use('/resenas', routerResena);
+servidor.use('/notificaciones', routerNotificaciones);
 servidor.get('/',(sol , res)=>{
     res.status(404).send("No encontrado");//por si no encuentra la conexion me enviara esta respuesta 
 });
