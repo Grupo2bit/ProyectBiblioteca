@@ -34,10 +34,26 @@ const controllerResenas = {
     },
     readResena : async(sol , res)=>{
         try{
-            const allResenaFound = await modelResena.find();
+            const ResenaFound = await modelResena.findById();
             res.json({
                 result: 'Exitoso',
                 message: ' Reseña encontrada',
+                data: ResenaFound
+            });
+        }catch(error){
+            res.json({
+                result: ' Error',
+                message: 'No es posible leer la reseña',
+                data: error,
+            });
+        }   
+    },
+    readResenas : async(sol , res)=>{
+        try{
+            const allResenaFound = await modelResena.find();
+            res.json({
+                result: 'Exitoso',
+                message: ' Reseñas encontradas',
                 data: allResenaFound
             });
         }catch(error){

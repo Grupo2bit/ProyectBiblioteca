@@ -63,12 +63,12 @@ const controllerLibros = {
         }
     },
     
-    readBook : async(sol , res)=>{
+    readBooks : async(sol , res)=>{
         try{
             const allBooksFound = await modelLibro.find();
             res.json({
                 result: 'fine',
-                message: ' Libro encontrado',
+                message: ' Libros encontrados',
                 data: allBooksFound
             });
         }catch(error){

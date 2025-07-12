@@ -5,7 +5,7 @@ import controllerLibros from '../controllers/controllerLibros.js';
 const routerLibro = Router();
 routerLibro.post('/', controllerLibros.createBook);
 routerLibro.get('/:id', controllerLibros.readBook);
-routerLibro.get('/', controllerLibros.readBook);
+routerLibro.get('/', controllerLibros.readBooks);
 routerLibro.put('/:id', controllerLibros.updateBook);
 routerLibro.delete('/:id', controllerLibros.deletebook);
 
