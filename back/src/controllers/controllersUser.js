@@ -1,6 +1,7 @@
 import Usuario from "../models/modelUser.js";
 import bcrypt from "bcryptjs";
 
+
 // Crear un nuevo usuario
 const createUser = async (req, res) => {
   try {
@@ -27,7 +28,6 @@ const readUser = async (req, res) => {
     res.status(400).json({ mensaje: "Error al buscar usuario", error });
   }
 };
-
 // Obtener todos los usuarios
 const readAllUsers = async (req, res) => {
   try {
@@ -41,12 +41,22 @@ const readAllUsers = async (req, res) => {
 // Actualizar un usuario por ID
 const updateUser = async (req, res) => {
   try {
+    const updateData = { ...req.body };
+
+    // Si se envía una nueva contraseña, la encriptamos
+    if (updateData.password) {
+      updateData.password = await bcrypt.hash(updateData.password, 10);
+    }
+
     const usuarioActualizado = await Usuario.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      updateData,
       { new: true }
     );
-    if (!usuarioActualizado) return res.status(404).json({ mensaje: "Usuario no encontrado" });
+if (!usuarioActualizado) {
+      return res.status(404).json({ mensaje: "Usuario no encontrado" });
+    }
+
     res.json(usuarioActualizado);
   } catch (error) {
     res.status(400).json({ mensaje: "Error al actualizar usuario", error });
@@ -63,7 +73,6 @@ const deleteUser = async (req, res) => {
     res.status(400).json({ mensaje: "Error al eliminar usuario", error });
   }
 };
-
 // Iniciar sesión
 const loginUser = async (req, res) => {
   try {
@@ -78,7 +87,6 @@ const loginUser = async (req, res) => {
     if (!esValida) {
       return res.status(401).json({ mensaje: "Contraseña incorrecta" });
     }
-
     res.json({
       mensaje: "Inicio de sesión exitoso",
       usuario: {
@@ -94,8 +102,6 @@ const loginUser = async (req, res) => {
 
   }
 };
-
-
 export default {
   createUser,
   readUser,
