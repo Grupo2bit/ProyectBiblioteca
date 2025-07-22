@@ -1,0 +1,72 @@
+<p>¡Gestión de préstamos!</p>
+<button (click)="prepararCrear()" class="btn btn-success">Nuevo préstamo</button>
+
+<div *ngIf="mostrarFormulario" class="mt-3">
+  <form (ngSubmit)="modo === 'crear' ? crearPrestamo() : actualizarPrestamo()" enctype="multipart/form-data">
+    <div>
+      <label>Número de documento:</label>
+      <input type="text" [(ngModel)]="prestamoForm.numero_documento" name="numero_documento" required />
+    </div>
+    <div>
+      <label>Título del libro:</label>
+      <input type="text" [(ngModel)]="prestamoForm.titulo_libro" name="titulo_libro" required />
+    </div>
+    <div>
+      <label>Fecha préstamo:</label>
+      <input type="datetime-local" [(ngModel)]="prestamoForm.fecha_prestamo" name="fecha_prestamo" required />
+    </div>
+    <div>
+      <label>Fecha devolución:</label>
+      <input type="datetime-local" [(ngModel)]="prestamoForm.fecha_devolucion" name="fecha_devolucion" />
+    </div>
+    <div>
+      <label>Fecha entrega:</label>
+      <input type="datetime-local" [(ngModel)]="prestamoForm.fecha_entrega" name="fecha_entrega" />
+    </div>
+    <div>
+      <label>Estado:</label>
+      <select [(ngModel)]="prestamoForm.estado" name="estado" required>
+        <option value="pendiente">Pendiente</option>
+        <option value="prestado">Prestado</option>
+        <option value="devuelto">Devuelto</option>
+        <option value="retrasado">Retrasado</option>
+      </select>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary">
+        {{ modo === 'crear' ? 'Crear préstamo' : 'Actualizar préstamo' }}
+      </button>
+      <button type="button" class="btn btn-info" (click)="cancelarFormulario()">Cancelar</button>
+    </div>
+  </form>
+</div>
+
+
+<p *ngIf="prestamos.length === 0">No hay préstamos registrados</p>
+<table class="table table-bordered mt-3" *ngIf="prestamos.length > 0">
+  <thead>
+    <tr>
+      <th>Número de documento</th>
+      <th>Título</th>
+      <th>Fecha préstamo</th>
+      <th>Fecha devolución</th>
+      <th>Fecha entrega</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let prest of prestamos">
+      <td>{{ prest.numero_documento }}</td>
+      <td>{{ prest.titulo_libro }}</td>
+      <td>{{ prest.fecha_prestamo | date: 'short' }}</td>
+      <td>{{ prest.fecha_devolucion ? (prest.fecha_devolucion | date: 'short') : '-' }}</td>
+      <td>{{ prest.fecha_entrega ? (prest.fecha_entrega | date: 'short') : '-' }}</td>
+      <td>{{ prest.estado }}</td>
+      <td>
+        <button class="btn btn-sm btn-warning" (click)="seleccionarParaEditar(prest)">Editar</button>
+        <button class="btn btn-sm btn-danger" (click)="eliminarPrestamo(prest._id!)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
