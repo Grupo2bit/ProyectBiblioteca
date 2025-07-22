@@ -1,0 +1,41 @@
+<p>crud-libros works!</p>
+<button (click)="prepararCrear()" class="btn btn-success">Nuevo libro</button>
+
+<div *ngIf="mostrarFormulario" class="mt-3">
+    <form (ngSubmit)="modo === 'crear' ? crearLibro(): actualizarLibro()"enctype="multipart/form-data">
+        <div>
+            <label>Titulo:</label>
+            <input type="text" [(ngModel)]="libroForm.titulo" name="titulo" required/>
+        </div>
+        <div>
+            <label>Autor:</label>
+            <input type="text" [(ngModel)]="libroForm.autor" name="autor" required/>
+        </div>
+        <div>
+            <label>Categoría:</label>
+            <input type="text" [(ngModel)]="libroForm.categoria" name="categoria" required/>
+        </div>
+        <div>
+            <label>Año Publicación:</label>
+            <input type="text" [(ngModel)]="libroForm.ano_publicacion" name="ano_publicacion" required/>
+        </div>
+        <div>
+            <label>Disponible:</label>
+            <input type="text" [(ngModel)]="libroForm.disponible" name="disponible" required/>
+        </div>
+        <div>
+            <label>Ejemplares:</label>
+            <input type="text" [(ngModel)]="libroForm.ejemplares" name="ejemplares" required/>
+        </div>
+        <div>
+            <label>Imagen:</label>
+            <input type="file" (change)="onFileSelected($event)"/>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">
+                {{modo === 'crear' ? 'Crear libro': 'Actualizar libro'}}
+            </button>
+            <button type="button" class="btn btn-info" (click)="cancelarFormulario()">Cancelar</button>
+        </div>
+    </form>
+</div>
