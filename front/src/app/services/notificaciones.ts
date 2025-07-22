@@ -1,34 +1,38 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Notificaciones } from '../interfaces/notificaciones';
 
+interface ApiNotificaciones {
+  result: string;
+  message: string;
+  data: Notificaciones[];
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificacionesService {
-  private API_URL = 'http://localhost:3000/notificaciones';
+  private apiUrl = 'http://localhost:3000/notificaciones';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   getAll(): Observable<Notificaciones[]> {
-    return this.httpClient.get<Notificaciones[]>(this.API_URL);
+    return this.http.get<ApiNotificaciones>(this.apiUrl)
+      .pipe(
+        map(response => response.data) // Extraemos solo el arreglo de notificaciones
+      );
   }
 
-  getById(id: string): Observable<Notificaciones> {
-    return this.httpClient.get<Notificaciones>(`${this.API_URL}/${id}`);
+  crear(notificacion: Notificaciones): Observable<ApiNotificaciones> {
+    return this.http.post<ApiNotificaciones>(this.apiUrl, notificacion);
   }
 
-  create(notificacion: Notificaciones): Observable<Notificaciones> {
-    return this.httpClient.post<Notificaciones>(this.API_URL, notificacion);
+  actualizar(id: string, notificacion: Notificaciones): Observable<ApiNotificaciones> {
+    return this.http.put<ApiNotificaciones>(`${this.apiUrl}/${id}`, notificacion);
   }
 
-  update(id: string, notificacion: Notificaciones): Observable<Notificaciones> {
-    return this.httpClient.put<Notificaciones>(`${this.API_URL}/${id}`, notificacion);
-  }
-
-  delete(id: string): Observable<void> {
-    return this.httpClient.delete<void>(`${this.API_URL}/${id}`);
+  eliminar(id: string): Observable<ApiNotificaciones> {
+    return this.http.delete<ApiNotificaciones>(`${this.apiUrl}/${id}`);
   }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { CrudNotificacionesComponent } from '../../components/crud-notificaciones/crud-notificaciones';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -9,7 +8,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
-  imports: [RouterModule, CommonModule, RouterLink, CrudNotificacionesComponent]
+  imports: [RouterModule, CommonModule, RouterLink]
 })
 export class DashboardComponent implements OnInit {
   usuario: any = null;

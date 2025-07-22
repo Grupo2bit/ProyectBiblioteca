@@ -3,8 +3,8 @@ export interface Notificaciones {
   numero_documento: string;
   tipo: 'recordatorio' | 'multa' | 'prestamo' | 'mensaje_admin';
   contenido: string;
-  fecha_envio: string;
-  estado: 'leida' | 'no_leida';
+  fecha_envio: string;   
+  estado: 'no_leida' | 'leida';
 }
 
 export interface ApiNotificaciones {

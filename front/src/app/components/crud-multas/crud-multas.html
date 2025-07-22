@@ -1,0 +1,118 @@
+<p>¡Gestión de multas!</p>
+
+<button (click)="prepararCrear()" class="btn btn-success">Nueva multa</button>
+
+<div *ngIf="mostrarFormulario" class="mt-3">
+  <form (ngSubmit)="guardar()" enctype="multipart/form-data">
+    <div>
+      <label>Número de documento:</label>
+      <input
+        type="text"
+        [(ngModel)]="multaForm.numero_documento"
+        name="numero_documento"
+        required
+      />
+    </div>
+
+    <div>
+      <label>Título del libro:</label>
+      <input
+        type="text"
+        [(ngModel)]="multaForm.titulo_libro"
+        name="titulo_libro"
+        required
+      />
+    </div>
+
+    <div>
+      <label>Monto:</label>
+      <input
+        type="number"
+        [(ngModel)]="multaForm.monto"
+        name="monto"
+        min="0"
+        step="0.01"
+        required
+      />
+    </div>
+
+    <div>
+      <label>Fecha de préstamo:</label>
+      <input
+        type="date"
+        [(ngModel)]="multaForm.fecha_Prestamo"
+        name="fecha_Prestamo"
+        required
+      />
+    </div>
+
+    <div>
+      <label>Fecha de devolución:</label>
+      <input
+        type="date"
+        [(ngModel)]="multaForm.fecha_devolucion"
+        name="fecha_devolucion"
+        required
+      />
+    </div>
+
+    <div>
+      <label>Fecha límite de pago:</label>
+      <input
+        type="date"
+        [(ngModel)]="multaForm.fecha_Limite_Pago"
+        name="fecha_Limite_Pago"
+        required
+      />
+    </div>
+
+    <div>
+      <label>Estado:</label>
+      <select [(ngModel)]="multaForm.estado" name="estado" required>
+        <option value="pendiente">Pendiente</option>
+        <option value="pagada">Pagada</option>
+      </select>
+    </div>
+
+    <div class="mt-3">
+      <button type="submit" class="btn btn-primary">
+        {{ editando ? 'Actualizar multa' : 'Crear multa' }}
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="cancelar()">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>
+
+<p *ngIf="multas.length === 0" class="mt-3">No hay multas registradas</p>
+
+<table class="table table-bordered mt-3" *ngIf="multas.length > 0">
+  <thead>
+    <tr>
+      <th>Número de documento</th>
+      <th>Título del libro</th>
+      <th>Monto</th>
+      <th>Fecha Préstamo</th>
+      <th>Fecha Devolución</th>
+      <th>Fecha Límite Pago</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let multa of multas">
+      <td>{{ multa.numero_documento }}</td>
+      <td>{{ multa.titulo_libro }}</td>
+      <td>{{ multa.monto | currency:'COP':'symbol':'1.0-2' }}</td>
+      <td>{{ multa.fecha_Prestamo | date:'shortDate' }}</td>
+      <td>{{ multa.fecha_devolucion | date:'shortDate' }}</td>
+      <td>{{ multa.fecha_Limite_Pago | date:'shortDate' }}</td>
+      <td>{{ multa.estado }}</td>
+      <td>
+        <button class="btn btn-sm btn-warning" (click)="editar(multa)">Editar</button>
+        <button class="btn btn-sm btn-danger" (click)="eliminar(multa._id!)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
