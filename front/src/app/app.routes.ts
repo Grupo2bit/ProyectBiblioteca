@@ -11,6 +11,7 @@ import { UsuarioNotificacionesComponent } from './components/usuario-notificacio
 import { UsuarioSolicitudComponent } from './components/usuario-solicitud/usuario-solicitud';
 import { Home } from './components/home/home';
 import { Login } from './components/login/login';
+import { CrudLibros } from './components/crud-libros/crud-libros';
 
 
 export const routes: Routes = [
@@ -19,6 +20,8 @@ export const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'sprestamos', component: CrudSolicitudPrestamoComponent},
   { path: 'prestamos', component: CrudPrestamos},
+  {path: 'libros', title: 'Libros', component: CrudLibros},
+   { path: 'sprestamos', component: CrudSolicitudPrestamoComponent},
   { path: 'notificaciones', component: CrudNotificacionesComponent },
   {path: 'dashboard/prestamos',component: UsuarioPrestamosComponent},
   {path: 'dashboard/multas',component: UsuarioMultasComponent},
