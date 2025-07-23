@@ -22,6 +22,8 @@ servidor.use('/solicitarPrestamos', routerSolicitarPrestamos);
 servidor.use('/multas', routerMultas);
 servidor.use('/resenas', routerResena);
 servidor.use('/notificaciones', routerNotificaciones);
+const app = express();
+servidor.use('/imagenes', express.static(path.join(process.cwd(), 'imagenes'))); 
 servidor.get('/',(sol , res)=>{
     res.status(404).send("No encontrado");//por si no encuentra la conexion me enviara esta respuesta 
 });

@@ -63,22 +63,33 @@ const controllerLibros = {
         }
     },
     
-    readBooks : async(sol , res)=>{
-        try{
-            const allBooksFound = await modelLibro.find();
+    readBooks: async (sol, res) => {
+        try {
+            const { titulo, autor } = sol.query;
+    
+            const filtro = {};
+            if (titulo) {
+                filtro.titulo = { $regex: titulo, $options: 'i' }; // insensible a mayúsculas
+            }
+            if (autor) {
+                filtro.autor = { $regex: autor, $options: 'i' };
+            }
+    
+            const librosFiltrados = await modelLibro.find(filtro);
             res.json({
                 result: 'fine',
-                message: ' Libros encontrados',
-                data: allBooksFound
+                message: 'Libros encontrados',
+                data: librosFiltrados
             });
-        }catch(error){
+        } catch (error) {
             res.json({
-                result: ' mistake',
+                result: 'mistake',
                 message: 'No se ha podido consultar los libros',
                 data: error,
             });
-        }   
+        }
     },
+    
         updateBook : async(sol , res)=>{
             try{
                 uploadSingleImage(sol,res,async(error)=>{
