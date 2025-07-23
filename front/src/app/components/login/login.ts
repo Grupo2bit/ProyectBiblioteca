@@ -24,7 +24,7 @@ export class Login {
     }).subscribe({
       next: (res) => {
         localStorage.setItem('usuario', JSON.stringify(res.usuario));
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/panel']);
       },
       error: (err) => {
   

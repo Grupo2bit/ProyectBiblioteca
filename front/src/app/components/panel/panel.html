@@ -1,0 +1,49 @@
+<h2>Bienvenido, {{ usuario?.name }}</h2>
+<p>Tu rol es: <strong>{{ usuario?.role }}</strong></p>
+
+
+<div *ngIf="isAdmin">
+  <h3>Opciones para Administrador</h3>
+  <ul class="list-group">
+    <li class="list-group-item">
+        <a routerLink="/libros">📖 Gestión de Libros</a>
+      </li>
+    <li class="list-group-item">
+      <a routerLink="/sprestamos">📚 Solicitudes de Préstamos</a>
+    </li>
+    <li class="list-group-item">
+      <a routerLink="/multas">💰 Gestión de Multas</a>
+    </li>
+    <li class="list-group-item">
+      <a routerLink="/notificaciones">🔔 Gestión de Notificaciones</a>
+    </li>
+    <li class="list-group-item">
+      <a routerLink="/prestamos">📖 Gestión de Préstamos</a>
+    </li>
+  </ul>
+  
+</div>
+
+
+<div *ngIf="!isAdmin">
+  <h3>Opciones para Usuario</h3>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <a routerLink="/dashboard/libros">📘 Consultar libros</a>
+    </li>
+    <li class="list-group-item">
+      <a routerLink="/dashboard/prestamos">📚 Ver mis Préstamos</a>
+    </li>
+    <li class="list-group-item">
+      <a routerLink="/dashboard/multas">💰 Ver mis Multas</a>
+    </li>
+    <li class="list-group-item">
+      <a routerLink="/dashboard/notificaciones">🔔 Ver mis Notificaciones</a>
+    </li>
+    <li class="list-group-item">
+      <a routerLink="/dashboard/solicitudprestamos">✍️ Ver mis Solicitudes de Préstamo</a>
+    </li>
+  </ul>
+</div>
+
+<button class="btn btn-danger mt-3" (click)="cerrarSesion()">Cerrar sesión</button>

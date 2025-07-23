@@ -12,12 +12,13 @@ import { UsuarioSolicitudComponent } from './components/usuario-solicitud/usuari
 import { Home } from './components/home/home';
 import { Login } from './components/login/login';
 import { CrudLibros } from './components/crud-libros/crud-libros';
+import { Panel } from './components/panel/panel';
 
 
 export const routes: Routes = [
   {path: 'home', title: 'Home', component: Home},
   { path: 'login', title: 'Login', component: Login },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'panel', title: 'Panel', component: Panel},
   { path: 'sprestamos', component: CrudSolicitudPrestamoComponent},
   { path: 'prestamos', component: CrudPrestamos},
   {path: 'libros', title: 'Libros', component: CrudLibros},
