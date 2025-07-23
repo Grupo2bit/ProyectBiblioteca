@@ -13,6 +13,7 @@ import { Home } from './components/home/home';
 import { Login } from './components/login/login';
 import { CrudLibros } from './components/crud-libros/crud-libros';
 import { Panel } from './components/panel/panel';
+import { CrudResenas } from './components/crud-resenas/crud-resenas';
 
 
 export const routes: Routes = [
@@ -22,6 +23,7 @@ export const routes: Routes = [
   { path: 'sprestamos', component: CrudSolicitudPrestamoComponent},
   { path: 'prestamos', component: CrudPrestamos},
   {path: 'libros', title: 'Libros', component: CrudLibros},
+  {path: 'resenas', title: 'Resenas', component: CrudResenas},
    { path: 'sprestamos', component: CrudSolicitudPrestamoComponent},
   { path: 'notificaciones', component: CrudNotificacionesComponent },
   {path: 'dashboard/prestamos',component: UsuarioPrestamosComponent},

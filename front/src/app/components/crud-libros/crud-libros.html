@@ -1,41 +1,104 @@
-<p>crud-libros works!</p>
-<button (click)="prepararCrear()" class="btn btn-success">Nuevo libro</button>
-
-<div *ngIf="mostrarFormulario" class="mt-3">
-    <form (ngSubmit)="modo === 'crear' ? crearLibro(): actualizarLibro()"enctype="multipart/form-data">
-        <div>
-            <label>Titulo:</label>
-            <input type="text" [(ngModel)]="libroForm.titulo" name="titulo" required/>
-        </div>
-        <div>
-            <label>Autor:</label>
-            <input type="text" [(ngModel)]="libroForm.autor" name="autor" required/>
-        </div>
-        <div>
-            <label>Categoría:</label>
-            <input type="text" [(ngModel)]="libroForm.categoria" name="categoria" required/>
-        </div>
-        <div>
-            <label>Año Publicación:</label>
-            <input type="text" [(ngModel)]="libroForm.ano_publicacion" name="ano_publicacion" required/>
-        </div>
-        <div>
-            <label>Disponible:</label>
-            <input type="text" [(ngModel)]="libroForm.disponible" name="disponible" required/>
-        </div>
-        <div>
-            <label>Ejemplares:</label>
-            <input type="text" [(ngModel)]="libroForm.ejemplares" name="ejemplares" required/>
-        </div>
-        <div>
-            <label>Imagen:</label>
-            <input type="file" (change)="onFileSelected($event)"/>
-        </div>
-        <div>
-            <button type="submit" class="btn btn-primary">
-                {{modo === 'crear' ? 'Crear libro': 'Actualizar libro'}}
+<!-- Botón para abrir el modal -->
+<div class="container mt-4">
+    <div class="d-flex justify-content-end mb-3">
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#libroModal">
+        📘 Nuevo libro
+      </button>
+    </div>
+  
+    <!-- Tabla de libros -->
+    <div class="table-responsive" *ngIf="libros.length > 0">
+      <table class="table table-hover table-bordered align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Categoría</th>
+            <th>Año</th>
+            <th>Disponible</th>
+            <th>Ejemplares</th>
+            <th>Imagen</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let libro of libros; index as i">
+            <td>{{ libro.titulo }}</td>
+            <td>{{ libro.autor }}</td>
+            <td>{{ libro.categoria }}</td>
+            <td>{{ libro.ano_publicacion }}</td>
+            <td>{{ libro.disponible ? 'Sí' : 'No' }}</td>
+            <td>{{ libro.ejemplares }}</td>
+            <td>
+                <img [src]="imagenBaseUrl + libro.imagen" alt="Imagen del libro" width="50" height="50">
+            </td>
+            <td>
+              <button class="btn btn-sm btn-warning me-1" (click)="seleccionarParaEditar(libro)">✏️ Editar</button>
+              <button class="btn btn-sm btn-danger" (click)="eliminarLibro(libro._id!)">🗑️ Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div *ngIf="libros.length === 0" class="alert alert-info text-center">
+      No hay libros registrados aún.
+    </div>
+  </div>
+  
+  <!-- Modal para formulario -->
+  <div class="modal fade" id="libroModal" tabindex="-1" aria-labelledby="libroModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+  
+        <form (ngSubmit)="modo === 'crear' ? crearLibro() : actualizarLibro()" enctype="multipart/form-data">
+          <div class="modal-header">
+            <h5 class="modal-title" id="libroModalLabel">
+              {{ modo === 'crear' ? 'Nuevo Libro' : 'Editar Libro' }}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+  
+          <div class="modal-body row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Título:</label>
+              <input type="text" class="form-control" [(ngModel)]="libroForm.titulo" name="titulo" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Autor:</label>
+              <input type="text" class="form-control" [(ngModel)]="libroForm.autor" name="autor" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Categoría:</label>
+              <input type="text" class="form-control" [(ngModel)]="libroForm.categoria" name="categoria" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Año Publicación:</label>
+              <input type="text" class="form-control" [(ngModel)]="libroForm.ano_publicacion" name="ano_publicacion" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Disponible:</label>
+              <input type="text" class="form-control" [(ngModel)]="libroForm.disponible" name="disponible" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Ejemplares:</label>
+              <input type="text" class="form-control" [(ngModel)]="libroForm.ejemplares" name="ejemplares" required />
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">Imagen:</label>
+              <input type="file" class="form-control" (change)="onFileSelected($event)" />
+            </div>
+          </div>
+  
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">
+              {{ modo === 'crear' ? 'Guardar libro' : 'Actualizar libro' }}
             </button>
-            <button type="button" class="btn btn-info" (click)="cancelarFormulario()">Cancelar</button>
-        </div>
-    </form>
-</div>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelarFormulario()">Cancelar</button>
+          </div>
+        </form>
+  
+      </div>
+    </div>
+  </div>
+  

@@ -3,7 +3,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { LibroS } from '../../services/libro-s';
 import { Libros } from '../../interfaces/libros';
 import { FormsModule } from '@angular/forms';
-
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-crud-libros',
@@ -47,13 +47,13 @@ ngOnInit(): void {
 selectedFile! : File;
 
 onFileSelected(event:any):void{
-  const file: File = event.target.file[0];
+  const file: File = event.target.files[0];
   if(file){
     this.selectedFile = file;
   }
 }
 
-// metodo para crear producto
+// metodo para crear libro
 
 crearLibro():void{
   if(!this.selectedFile){
@@ -71,7 +71,7 @@ crearLibro():void{
 
   this.librosService.crear(formData).subscribe({
     next:()=>{
-      alert('Producto creado correctamente');
+      alert('Libro creado correctamente');
       this.libroForm = this.resetLibro();
       this.selectedFile = undefined!;
       this.mostrarFormulario = false;
@@ -102,6 +102,12 @@ seleccionarParaEditar(libro:Libros):void{
   this.modo = 'editar';
   this.libroForm = {...libro};
   this.mostrarFormulario = true;
+
+  const modalElement = document.getElementById('libroModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+}
 }
 prepararCrear():void{
   this.modo='crear';
@@ -139,6 +145,12 @@ actualizarLibro():void{
       this.libroForm = this.resetLibro();
       this.selectedFile = undefined!;
       this.mostrarFormulario = false;
+
+      const modalElement = document.getElementById('libroModal');
+if (modalElement) {
+  const modal = bootstrap.Modal.getInstance(modalElement);
+  modal?.hide();
+}
       this.obtenerLibros();
       this.cdr.detectChanges();
 
