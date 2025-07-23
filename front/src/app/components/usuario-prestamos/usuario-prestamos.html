@@ -1,0 +1,41 @@
+<h3>Consultar Mis Préstamos</h3>
+
+<div class="mb-3">
+  <label for="docInput">Número de documento:</label>
+  <input
+    id="docInput"
+    type="text"
+    [(ngModel)]="documentoConsulta"
+    class="form-control"
+    placeholder="Ingrese su número de documento"
+  />
+</div>
+
+<button (click)="consultarPrestamos()" class="btn btn-primary mb-3">
+  Consultar
+</button>
+
+<p *ngIf="mensaje" class="text-warning">{{ mensaje }}</p>
+
+<table *ngIf="prestamos.length > 0" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Título del libro</th>
+      <th>Fecha de préstamo</th>
+      <th>Fecha de devolución</th>
+      <th>Fecha de entrega</th>
+      <th>Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let prestamo of prestamos">
+      <td>{{ prestamo.titulo_libro }}</td>
+      <td>{{ prestamo.fecha_prestamo | date:'shortDate' }}</td>
+      <td>{{ prestamo.fecha_devolucion ? (prestamo.fecha_devolucion | date:'shortDate') : 'N/A' }}</td>
+      <td>{{ prestamo.fecha_entrega ? (prestamo.fecha_entrega | date:'shortDate') : 'N/A' }}</td>
+      <td>{{ prestamo.estado }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<p *ngIf="!mensaje && prestamos.length === 0">No hay préstamos para mostrar.</p>

@@ -1,0 +1,30 @@
+<h3>Consultar Mis Solicitudes de Préstamo</h3>
+
+<div>
+  <input
+    type="text"
+    [(ngModel)]="documentoConsulta"
+    placeholder="Ingrese número de documento"
+    class="form-control w-50 d-inline-block me-2"
+  />
+  <button (click)="consultarSolicitudes()" class="btn btn-primary">Buscar</button>
+</div>
+
+<p *ngIf="mensaje" class="mt-3 text-danger">{{ mensaje }}</p>
+
+<table *ngIf="solicitudes.length > 0" class="table table-striped mt-3">
+  <thead>
+    <tr>
+      <th>Título del libro</th>
+      <th>Fecha de solicitud</th>
+      <th>Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let sol of solicitudes">
+      <td>{{ sol.titulo_libro }}</td>
+      <td>{{ sol.fecha_solicitud | date:'shortDate' }}</td>
+      <td>{{ sol.estado }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,31 @@
+<h3>Consultar Mis Multas</h3>
+
+<div>
+  <input
+    type="text"
+    [(ngModel)]="documentoConsulta"
+    placeholder="Ingrese número de documento"
+  />
+  <button (click)="consultarMultas()">Buscar</button>
+</div>
+
+<p *ngIf="mensaje">{{ mensaje }}</p>
+
+<table *ngIf="multas.length > 0" class="table">
+  <thead>
+    <tr>
+      <th>Número Documento</th>
+      <th>Título Libro</th>
+      <th>Monto</th>
+      <th>Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let multa of multas">
+      <td>{{ multa.numero_documento }}</td>
+      <td>{{ multa.titulo_libro }}</td>
+      <td>{{ multa.monto | currency:'COP' }}</td>
+      <td>{{ multa.estado }}</td>
+    </tr>
+  </tbody>
+</table>

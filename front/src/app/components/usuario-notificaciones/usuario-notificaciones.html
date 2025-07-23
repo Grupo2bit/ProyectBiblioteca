@@ -1,0 +1,31 @@
+<h3>Consultar Mis Notificaciones</h3>
+
+<div>
+  <input
+    type="text"
+    [(ngModel)]="documentoConsulta"
+    placeholder="Ingrese número de documento"
+  />
+  <button (click)="consultarNotificaciones()">Buscar</button>
+</div>
+
+<p *ngIf="mensaje">{{ mensaje }}</p>
+
+<table *ngIf="notificaciones.length > 0" class="table">
+  <thead>
+    <tr>
+      <th>Tipo</th>
+      <th>Contenido</th>
+      <th>Fecha de envío</th>
+      <th>Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let notif of notificaciones">
+      <td>{{ notif.tipo }}</td>
+      <td>{{ notif.contenido }}</td>
+      <td>{{ notif.fecha_envio | date:'short' }}</td>
+      <td>{{ notif.estado }}</td>
+    </tr>
+  </tbody>
+</table>
