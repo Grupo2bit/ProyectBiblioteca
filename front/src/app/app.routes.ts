@@ -12,8 +12,9 @@ import { UsuarioSolicitudComponent } from './components/usuario-solicitud/usuari
 import { Home } from './components/home/home';
 import { Login } from './components/login/login';
 
+
 export const routes: Routes = [
-   {path: 'home', title: 'Home', component: Home},
+  {path: 'home', title: 'Home', component: Home},
   { path: 'login', title: 'Login', component: Login },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'sprestamos', component: CrudSolicitudPrestamoComponent},

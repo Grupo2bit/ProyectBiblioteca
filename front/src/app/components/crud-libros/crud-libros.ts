@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class CrudLibros implements OnInit{
   libros: Libros[] = [];
+  filtroTitulo: string = '';
+filtroAutor: string = '';
 imagenBaseUrl = 'http://localhost:3000/imagenes/';
 mostrarFormulario = false;
 libroForm: Libros= this.resetLibro();
@@ -25,7 +27,10 @@ constructor(private librosService:LibroS,
 
 // metodo para cargar los libros en la tabla
 obtenerLibros():void{
-  this.librosService.getAll().subscribe({
+  const filtros: any = {};
+  if (this.filtroTitulo) filtros.titulo = this.filtroTitulo;
+  if (this.filtroAutor) filtros.autor = this.filtroAutor;
+  this.librosService.getAll(filtros).subscribe({
     next:(resp)=>{
       this.libros=resp;
       this.cdr.detectChanges();

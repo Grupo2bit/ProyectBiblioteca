@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Libros, ApiLibros } from '../interfaces/libros';
 import { Observable, map } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,22 @@ export class LibroS {
 
   constructor(private http: HttpClient) { }
 
-  getAll():Observable<Libros[]>{
-    return this.http.get<ApiLibros>(this.API_URL).pipe(map(resp=> resp.data));
+  getAll(filtros?: any): Observable<Libros[]> {
+    let params = new HttpParams();
+  
+    if (filtros?.titulo) {
+      params = params.set('titulo', filtros.titulo);
+    }
+  
+    if (filtros?.autor) {
+      params = params.set('autor', filtros.autor);
+    }
+  
+    return this.http.get<ApiLibros>(this.API_URL, { params }).pipe(
+      map(resp => resp.data)
+    );
   }
+  
   crear(formData: FormData): Observable<any>{
     return this.http.post('http://localhost:3000/libros', formData);
   }
