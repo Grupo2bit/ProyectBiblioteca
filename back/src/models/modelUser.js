@@ -11,9 +11,15 @@ const schemaUser = new Schema({
   address: { type: String, required: true },
   role: { type: String, enum: ['administrador', 'usuario'], default: 'usuario' },
   estatus: { type: String, enum: ['activo', 'inactivo'], default: 'activo' },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+
+  // 🔐 Campos para recuperación de contraseña
+  resetToken: { type: String, default: null },
+  resetTokenExpires: { type: Date, default: null }
+
 }, {
   timestamps: true 
 });
 
 export default model("Usuario", schemaUser);
+

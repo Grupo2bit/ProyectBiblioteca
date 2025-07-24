@@ -1,1 +1,70 @@
-<p>register works!</p>
+<div class="register-container">
+  <h2>Registro de Usuario</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <!-- Nombre -->
+    <label>Nombre completo</label>
+    <input formControlName="name" placeholder="Ej: Juan Pérez" />
+    <div *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+      <small>El nombre es obligatorio</small>
+    </div>
+
+    <!-- Tipo de documento -->
+    <label>Tipo de documento</label>
+    <select formControlName="type_document">
+      <option value="Cédula">Cédula</option>
+      <option value="Pasaporte">Pasaporte</option>
+    </select>
+
+    <!-- Documento -->
+    <label>Número de documento</label>
+    <input formControlName="name_document" />
+    <div *ngIf="form.get('name_document')?.touched && form.get('name_document')?.invalid">
+      <small>El número de documento es obligatorio</small>
+    </div>
+
+    <!-- Fecha -->
+    <label>Fecha de nacimiento</label>
+    <input type="date" formControlName="date_of_birth" />
+
+    <!-- Email -->
+    <label>Correo electrónico</label>
+    <input formControlName="email" />
+    <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+      <small *ngIf="form.get('email')?.errors?.['required']">El correo es obligatorio</small>
+      <small *ngIf="form.get('email')?.errors?.['email']">Correo inválido</small>
+    </div>
+
+    <!-- Teléfono -->
+    <label>Teléfono</label>
+    <input formControlName="phone" />
+
+    <!-- Dirección -->
+    <label>Dirección</label>
+    <input formControlName="address" />
+
+    <!-- Contraseña -->
+    <label>Contraseña</label>
+    <input type="password" formControlName="password" />
+    <div *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+      <small *ngIf="form.get('password')?.errors?.['required']">La contraseña es obligatoria</small>
+      <small *ngIf="form.get('password')?.errors?.['minlength']">Debe tener al menos 6 caracteres</small>
+    </div>
+
+    <!-- Rol -->
+    <label for="role">Rol</label>
+    <select formControlName="role" id="role">
+      <option value="usuario">Usuario</option>
+      <option value="administrador">Administrador</option>
+    </select>
+    <div *ngIf="form.get('role')?.touched && form.get('role')?.invalid">
+      <small>El rol es obligatorio</small>
+    </div>
+
+    <button type="submit" [disabled]="form.invalid">Registrarse</button>
+  </form>
+
+  <p>¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a></p>
+</div>
+

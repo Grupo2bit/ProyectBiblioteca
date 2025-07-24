@@ -45,4 +45,34 @@
   button:hover {
     background-color: #0056b3;
   }
-  
+ .forgot-password {
+  text-align: right;
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+}
+
+.forgot-password a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.register-link a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+

@@ -9,7 +9,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   imports: [FormsModule, RouterModule, HttpClientModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
-
 })
 export class LoginComponent {
   email = '';
@@ -27,10 +26,9 @@ export class LoginComponent {
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
-  
-  alert(err.error.mensaje || 'Error al iniciar sesión');
-}
-
+        alert(err.error.mensaje || 'Error al iniciar sesión');
+      }
     });
   }
 }
+

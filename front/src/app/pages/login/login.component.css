@@ -45,3 +45,17 @@ button {
 button:hover {
   background-color: #0056b3;
 }
+
+.forgot-password {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.forgot-password a {
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
