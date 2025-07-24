@@ -6,6 +6,9 @@
   <h3>Opciones para Administrador</h3>
   <ul class="list-group">
     <li class="list-group-item">
+      <a routerLink="/libros">📚 Gestión Libros</a>
+    </li>
+    <li class="list-group-item">
       <a routerLink="/sprestamos">📚 Solicitudes de Préstamos</a>
     </li>
     <li class="list-group-item">
@@ -17,15 +20,19 @@
     <li class="list-group-item">
       <a routerLink="/prestamos">📖 Gestión de Préstamos</a>
     </li>
+    <li class="list-group-item">
+      <a routerLink="/">✍️ Gestión de Reseñas</a>
+    </li>
   </ul>
 </div>
+
 
 
 <div *ngIf="!isAdmin">
   <h3>Opciones para Usuario</h3>
   <ul class="list-group">
     <li class="list-group-item">
-      <a routerLink="/dashboard/libros">📘 Consultar libros</a>
+      <a routerLink="/dashboard/consultarLibros">📘 Consultar libros</a>
     </li>
     <li class="list-group-item">
       <a routerLink="/dashboard/prestamos">📚 Ver mis Préstamos</a>
@@ -35,6 +42,9 @@
     </li>
     <li class="list-group-item">
       <a routerLink="/dashboard/notificaciones">🔔 Ver mis Notificaciones</a>
+    </li>
+    <li class="list-group-item">
+      <a routerLink="/sprestamos">✍️Crear una solicitud de Préstamo</a>
     </li>
     <li class="list-group-item">
       <a routerLink="/dashboard/solicitudprestamos">✍️ Ver mis Solicitudes de Préstamo</a>

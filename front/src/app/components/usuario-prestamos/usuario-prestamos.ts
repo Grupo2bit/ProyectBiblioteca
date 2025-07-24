@@ -9,6 +9,7 @@ import { Prestamo } from '../../interfaces/prestamo';
   standalone: true,
   imports: [CommonModule, FormsModule],  // Agrega FormsModule aquí
   templateUrl: './usuario-prestamos.html',
+   styleUrls: ['./usuario-prestamos.css']
 })
 export class UsuarioPrestamosComponent {
   prestamos: Prestamo[] = [];

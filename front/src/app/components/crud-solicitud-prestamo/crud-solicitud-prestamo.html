@@ -1,83 +1,106 @@
-<p>Gestión de Solicitudes de Préstamo</p>
+<div class="container mt-4">
+  <p class="fs-3 fw-bold text-primary">Gestión de Solicitudes de Préstamo</p>
 
-<div class="card p-3 mt-3">
-  <form (ngSubmit)="guardar()">
-    <div>
-      <label>Número de documento:</label>
-      <input type="text" [(ngModel)]="solicitudForm.numero_documento" name="numero_documento" required />
-    </div>
+  <!-- Botón para abrir el modal -->
+  <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#solicitudModal" (click)="prepararCrear()">
+    ➕ Nueva Solicitud
+  </button>
 
-    <div>
-      <label>Título del libro:</label>
-      <input type="text" [(ngModel)]="solicitudForm.titulo_libro" name="titulo_libro" required />
-    </div>
+  <!-- Modal -->
+  <div class="modal fade" id="solicitudModal" tabindex="-1" aria-labelledby="solicitudModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <form (ngSubmit)="guardar()">
+          <div class="modal-header">
+            <h5 class="modal-title" id="solicitudModalLabel">
+              {{ editando ? 'Editar Solicitud' : 'Nueva Solicitud' }}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
 
-    <div>
-      <label>Fecha de solicitud:</label>
-      <input type="date" [(ngModel)]="solicitudForm.fecha_solicitud" name="fecha_solicitud" required />
-    </div>
+            <div class="mb-3">
+              <label class="form-label">Número de documento:</label>
+              <input type="text" class="form-control" [(ngModel)]="solicitudForm.numero_documento" name="numero_documento" required />
+            </div>
 
-    <div>
-      <label>Fecha de devolución:</label>
-      <input type="date" [(ngModel)]="solicitudForm.fecha_devolucion" name="fecha_devolucion" />
-    </div>
+            <div class="mb-3">
+              <label class="form-label">Título del libro:</label>
+              <input type="text" class="form-control" [(ngModel)]="solicitudForm.titulo_libro" name="titulo_libro" required />
+            </div>
 
-    <div>
-      <label>Estado:</label>
-      <select [(ngModel)]="solicitudForm.estado" name="estado" required>
-        <option value="Pendiente">Pendiente</option>
-        <option value="Aprobado">Aprobado</option>
-        <option value="Rechazado">Rechazado</option>
-      </select>
-    </div>
+            <div class="mb-3">
+              <label class="form-label">Fecha de solicitud:</label>
+              <input type="date" class="form-control" [(ngModel)]="solicitudForm.fecha_solicitud" name="fecha_solicitud" required />
+            </div>
 
-    <div>
-      <label>Comentario:</label>
-      <textarea [(ngModel)]="solicitudForm.comentario" name="comentario"></textarea>
-    </div>
+            <div class="mb-3">
+              <label class="form-label">Fecha de devolución:</label>
+              <input type="date" class="form-control" [(ngModel)]="solicitudForm.fecha_devolucion" name="fecha_devolucion" />
+            </div>
 
-    <div>
-      <label>Procesado por:</label>
-      <input type="text" [(ngModel)]="solicitudForm.procesado_por" name="procesado_por" />
-    </div>
+            <div class="mb-3">
+              <label class="form-label">Estado:</label>
+              <select class="form-select" [(ngModel)]="solicitudForm.estado" name="estado" required>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Aprobado">Aprobado</option>
+                <option value="Rechazado">Rechazado</option>
+              </select>
+            </div>
 
-    <div class="mt-2">
-      <button type="submit" class="btn btn-primary">
-        {{ editando ? 'Actualizar solicitud' : 'Crear solicitud' }}
-      </button>
-      <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+            <div class="mb-3">
+              <label class="form-label">Comentario:</label>
+              <textarea class="form-control" [(ngModel)]="solicitudForm.comentario" name="comentario"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Procesado por:</label>
+              <input type="text" class="form-control" [(ngModel)]="solicitudForm.procesado_por" name="procesado_por" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">
+              {{ editando ? 'Actualizar solicitud' : 'Crear solicitud' }}
+            </button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelar()">Cancelar</button>
+          </div>
+        </form>
+      </div>
     </div>
-  </form>
+  </div>
+
+  <!-- Tabla de solicitudes -->
+  <p *ngIf="solicitudes.length === 0">No hay solicitudes registradas.</p>
+
+  <table class="table table-bordered mt-4" *ngIf="solicitudes.length > 0">
+    <thead>
+      <tr>
+        <th>N° Documento</th>
+        <th>Título</th>
+        <th>Fecha Solicitud</th>
+        <th>Fecha Devolución</th>
+        <th>Estado</th>
+        <th>Comentario</th>
+        <th>Procesado Por</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let solicitud of solicitudes">
+        <td>{{ solicitud.numero_documento }}</td>
+        <td>{{ solicitud.titulo_libro }}</td>
+        <td>{{ solicitud.fecha_solicitud | date: 'shortDate' }}</td>
+        <td>{{ solicitud.fecha_devolucion | date: 'shortDate' }}</td>
+        <td>{{ solicitud.estado }}</td>
+        <td>{{ solicitud.comentario }}</td>
+        <td>{{ solicitud.procesado_por }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning" (click)="seleccionarParaEditar(solicitud)" data-bs-toggle="modal" data-bs-target="#solicitudModal">
+            Editar
+          </button>
+          <button class="btn btn-sm btn-danger" (click)="eliminar(solicitud._id!)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-
-
-<p *ngIf="solicitudes.length === 0">No hay solicitudes registradas.</p>
-<table class="table table-bordered mt-4" *ngIf="solicitudes.length > 0">
-  <thead>
-    <tr>
-      <th>N° Documento</th>
-      <th>Título</th>
-      <th>Fecha Solicitud</th>
-      <th>Fecha Devolución</th>
-      <th>Estado</th>
-      <th>Comentario</th>
-      <th>Procesado Por</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let solicitud of solicitudes">
-      <td>{{ solicitud.numero_documento }}</td>
-      <td>{{ solicitud.titulo_libro }}</td>
-      <td>{{ solicitud.fecha_solicitud | date: 'shortDate' }}</td>
-      <td>{{ solicitud.fecha_devolucion | date: 'shortDate' }}</td>
-      <td>{{ solicitud.estado }}</td>
-      <td>{{ solicitud.comentario }}</td>
-      <td>{{ solicitud.procesado_por }}</td>
-      <td>
-        <button class="btn btn-sm btn-warning" (click)="seleccionarParaEditar(solicitud)">Editar</button>
-        <button class="btn btn-sm btn-danger" (click)="eliminar(solicitud._id!)">Eliminar</button>
-      </td>
-    </tr>
-  </tbody>
-</table>

@@ -1,0 +1,140 @@
+<div class="container py-4">
+  <h3 class="mb-4 text-center text-primary">
+    {{ editMode ? 'Editar Solicitud de Préstamo' : 'Crear Solicitud de Préstamo' }}
+  </h3>
+
+  <div *ngIf="mensaje" class="alert alert-success text-center" role="alert">
+    {{ mensaje }}
+  </div>
+
+  <form (ngSubmit)="guardar()" class="mx-auto bg-light border rounded p-4 shadow-sm" style="max-width: 600px;">
+    <div class="mb-3">
+      <label for="numero_documento" class="form-label fw-semibold">Número Documento</label>
+      <input
+        type="text"
+        id="numero_documento"
+        class="form-control form-control-lg"
+        [(ngModel)]="formData.numero_documento"
+        name="numero_documento"
+        placeholder="Ingrese su número de documento"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="titulo_libro" class="form-label fw-semibold">Título Libro</label>
+      <input
+        type="text"
+        id="titulo_libro"
+        class="form-control form-control-lg"
+        [(ngModel)]="formData.titulo_libro"
+        name="titulo_libro"
+        placeholder="Ingrese el título del libro"
+        required
+      />
+    </div>
+
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <label for="fecha_solicitud" class="form-label fw-semibold">Fecha Solicitud</label>
+        <input
+          type="date"
+          id="fecha_solicitud"
+          class="form-control"
+          [(ngModel)]="formData.fecha_solicitud"
+          name="fecha_solicitud"
+          required
+        />
+      </div>
+
+      <div class="col-md-6">
+        <label for="estado" class="form-label fw-semibold">Estado</label>
+        <input
+          type="text"
+          id="estado"
+          class="form-control"
+          [(ngModel)]="formData.estado"
+          name="estado"
+          readonly
+        />
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="comentario" class="form-label fw-semibold">Comentario</label>
+      <textarea
+        id="comentario"
+        class="form-control"
+        [(ngModel)]="formData.comentario"
+        name="comentario"
+        rows="4"
+        placeholder="Comentarios adicionales (opcional)"
+      ></textarea>
+    </div>
+
+    <div class="row g-3 mb-4">
+      <div class="col-md-6">
+        <label for="fecha_devolucion" class="form-label fw-semibold">Fecha Devolución</label>
+        <input
+          type="date"
+          id="fecha_devolucion"
+          class="form-control"
+          [(ngModel)]="formData.fecha_devolucion"
+          name="fecha_devolucion"
+          readonly
+        />
+      </div>
+      <div class="col-md-6">
+        <label for="procesado_por" class="form-label fw-semibold">Procesado Por</label>
+        <input
+          type="text"
+          id="procesado_por"
+          class="form-control"
+          [(ngModel)]="formData.procesado_por"
+          name="procesado_por"
+          readonly
+        />
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center gap-3">
+      <button type="submit" class="btn btn-success px-4">
+        {{ editMode ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button type="button" class="btn btn-outline-secondary px-4" (click)="limpiarFormulario()">
+        Limpiar
+      </button>
+    </div>
+  </form>
+
+  <!-- Listado de solicitudes -->
+  <div *ngIf="preSolicitudes.length > 0" class="mt-5">
+    <h4 class="text-secondary mb-3 text-center">Solicitudes Registradas</h4>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover align-middle">
+        <thead class="table-secondary text-center">
+          <tr>
+            <th>Documento</th>
+            <th>Título</th>
+            <th>Fecha Solicitud</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let solicitud of preSolicitudes">
+            <td>{{ solicitud.numero_documento }}</td>
+            <td>{{ solicitud.titulo_libro }}</td>
+            <td>{{ solicitud.fecha_solicitud }}</td>
+            <td>{{ solicitud.estado }}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-primary me-2" (click)="editar(solicitud)">Editar</button>
+              <button class="btn btn-sm btn-danger" (click)="eliminar(solicitud._id)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

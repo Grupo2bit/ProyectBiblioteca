@@ -1,0 +1,33 @@
+p {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 1.2px;
+}
+
+.badge {
+  font-size: 0.9rem;
+  padding: 0.4em 0.7em;
+  text-transform: uppercase;
+}
+
+.table-primary {
+  background-color: #cfe2ff;
+  color: #084298;
+}
+
+.modal-dialog {
+  max-width: 700px;
+}
+
+.modal-header {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.btn-warning {
+  color: #212529;
+}
+
+.btn-warning:hover {
+  background-color: #ffca2c;
+  color: #212529;
+}

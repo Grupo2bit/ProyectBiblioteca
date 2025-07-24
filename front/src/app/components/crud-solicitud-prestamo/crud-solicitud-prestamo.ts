@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class CrudSolicitudPrestamoComponent implements OnInit {
   solicitudes: SolicitudPrestamo[] = [];
+
   solicitudForm: SolicitudPrestamo = {
     numero_documento: '',
     titulo_libro: '',
@@ -52,12 +53,25 @@ export class CrudSolicitudPrestamoComponent implements OnInit {
       });
     }
   }
+  private convertirFechaInput(fecha: string | Date): string {
+  const date = new Date(fecha);
+  const year = date.getFullYear();
+  const month = ('0' + (date.getMonth() + 1)).slice(-2);
+  const day = ('0' + date.getDate()).slice(-2);
+  return `${year}-${month}-${day}`;
+}
+
 
   seleccionarParaEditar(solicitud: SolicitudPrestamo) {
-    this.solicitudForm = { ...solicitud };
-    this.editando = true;
-    this.idEditar = solicitud._id || null;
-  }
+  this.solicitudForm = {
+    ...solicitud,
+    fecha_solicitud: this.convertirFechaInput(solicitud.fecha_solicitud),
+    fecha_devolucion: this.convertirFechaInput(solicitud.fecha_devolucion)
+  };
+  this.editando = true;
+  this.idEditar = solicitud._id || null;
+}
+
 
   eliminar(id: string) {
     this.servicio.eliminar(id).subscribe(() => {
@@ -66,6 +80,20 @@ export class CrudSolicitudPrestamoComponent implements OnInit {
   }
 
   cancelar() {
+    this.solicitudForm = {
+      numero_documento: '',
+      titulo_libro: '',
+      fecha_solicitud: '',
+      fecha_devolucion: '',
+      estado: 'Pendiente',
+      comentario: '',
+      procesado_por: ''
+    };
+    this.editando = false;
+    this.idEditar = null;
+  }
+
+  prepararCrear() {
     this.solicitudForm = {
       numero_documento: '',
       titulo_libro: '',

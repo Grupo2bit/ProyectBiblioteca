@@ -1,72 +1,218 @@
-<p>¡Gestión de préstamos!</p>
-<button (click)="prepararCrear()" class="btn btn-success">Nuevo préstamo</button>
+<div class="container mt-4">
 
-<div *ngIf="mostrarFormulario" class="mt-3">
-  <form (ngSubmit)="modo === 'crear' ? crearPrestamo() : actualizarPrestamo()" enctype="multipart/form-data">
-    <div>
-      <label>Número de documento:</label>
-      <input type="text" [(ngModel)]="prestamoForm.numero_documento" name="numero_documento" required />
+  <!-- Título y botón abrir modal -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <p class="fs-3 fw-bold mb-0 text-primary">¡Gestión de préstamos!</p>
+    <button
+      class="btn btn-success"
+      data-bs-toggle="modal"
+      data-bs-target="#prestamoModal"
+      (click)="prepararCrear()"
+    >
+      ➕ Nuevo préstamo
+    </button>
+  </div>
+
+  <!-- Modal para formulario -->
+  <div
+    class="modal fade"
+    id="prestamoModal"
+    tabindex="-1"
+    aria-labelledby="prestamoModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+
+        <form (ngSubmit)="modo === 'crear' ? crearPrestamo() : actualizarPrestamo()" #formPrestamo="ngForm" novalidate>
+          <div class="modal-header">
+            <h5 class="modal-title" id="prestamoModalLabel">
+              {{ modo === 'crear' ? 'Crear préstamo' : 'Editar préstamo' }}
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="row g-3">
+
+              <div class="col-md-6">
+                <label for="numeroDocumento" class="form-label">Número de documento</label>
+                <input
+                  type="text"
+                  id="numeroDocumento"
+                  class="form-control"
+                  required
+                  [(ngModel)]="prestamoForm.numero_documento"
+                  name="numero_documento"
+                  #numeroDocumento="ngModel"
+                />
+                <div
+                  *ngIf="numeroDocumento.invalid && numeroDocumento.touched"
+                  class="text-danger small"
+                >
+                  Campo obligatorio.
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="tituloLibro" class="form-label">Título del libro</label>
+                <input
+                  type="text"
+                  id="tituloLibro"
+                  class="form-control"
+                  required
+                  [(ngModel)]="prestamoForm.titulo_libro"
+                  name="titulo_libro"
+                  #tituloLibro="ngModel"
+                />
+                <div
+                  *ngIf="tituloLibro.invalid && tituloLibro.touched"
+                  class="text-danger small"
+                >
+                  Campo obligatorio.
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="fechaPrestamo" class="form-label">Fecha préstamo</label>
+                <input
+                  type="datetime-local"
+                  id="fechaPrestamo"
+                  class="form-control"
+                  required
+                  [(ngModel)]="prestamoForm.fecha_prestamo"
+                  name="fecha_prestamo"
+                  #fechaPrestamo="ngModel"
+                />
+                <div
+                  *ngIf="fechaPrestamo.invalid && fechaPrestamo.touched"
+                  class="text-danger small"
+                >
+                  Campo obligatorio.
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="fechaDevolucion" class="form-label">Fecha devolución</label>
+                <input
+                  type="datetime-local"
+                  id="fechaDevolucion"
+                  class="form-control"
+                  [(ngModel)]="prestamoForm.fecha_devolucion"
+                  name="fecha_devolucion"
+                />
+              </div>
+
+              <div class="col-md-6">
+                <label for="fechaEntrega" class="form-label">Fecha entrega</label>
+                <input
+                  type="datetime-local"
+                  id="fechaEntrega"
+                  class="form-control"
+                  [(ngModel)]="prestamoForm.fecha_entrega"
+                  name="fecha_entrega"
+                />
+              </div>
+
+              <div class="col-md-6">
+                <label for="estado" class="form-label">Estado</label>
+                <select
+                  id="estado"
+                  class="form-select"
+                  required
+                  [(ngModel)]="prestamoForm.estado"
+                  name="estado"
+                  #estado="ngModel"
+                >
+                  <option value="" disabled>Seleccione estado</option>
+                  <option value="pendiente">Pendiente</option>
+                  <option value="prestado">Prestado</option>
+                  <option value="devuelto">Devuelto</option>
+                  <option value="retrasado">Retrasado</option>
+                </select>
+                <div
+                  *ngIf="estado.invalid && estado.touched"
+                  class="text-danger small"
+                >
+                  Seleccione un estado.
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="formPrestamo.invalid"
+              data-bs-dismiss="modal"
+            >
+              {{ modo === 'crear' ? 'Crear préstamo' : 'Actualizar préstamo' }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              (click)="cancelarFormulario()"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+
+      </div>
     </div>
-    <div>
-      <label>Título del libro:</label>
-      <input type="text" [(ngModel)]="prestamoForm.titulo_libro" name="titulo_libro" required />
-    </div>
-    <div>
-      <label>Fecha préstamo:</label>
-      <input type="datetime-local" [(ngModel)]="prestamoForm.fecha_prestamo" name="fecha_prestamo" required />
-    </div>
-    <div>
-      <label>Fecha devolución:</label>
-      <input type="datetime-local" [(ngModel)]="prestamoForm.fecha_devolucion" name="fecha_devolucion" />
-    </div>
-    <div>
-      <label>Fecha entrega:</label>
-      <input type="datetime-local" [(ngModel)]="prestamoForm.fecha_entrega" name="fecha_entrega" />
-    </div>
-    <div>
-      <label>Estado:</label>
-      <select [(ngModel)]="prestamoForm.estado" name="estado" required>
-        <option value="pendiente">Pendiente</option>
-        <option value="prestado">Prestado</option>
-        <option value="devuelto">Devuelto</option>
-        <option value="retrasado">Retrasado</option>
-      </select>
-    </div>
-    <div>
-      <button type="submit" class="btn btn-primary">
-        {{ modo === 'crear' ? 'Crear préstamo' : 'Actualizar préstamo' }}
-      </button>
-      <button type="button" class="btn btn-info" (click)="cancelarFormulario()">Cancelar</button>
-    </div>
-  </form>
+  </div>
+
+  <!-- Mensaje cuando no hay préstamos -->
+  <div *ngIf="prestamos.length === 0" class="alert alert-info text-center mt-4">
+    No hay préstamos registrados.
+  </div>
+
+  <!-- Tabla de préstamos -->
+  <div *ngIf="prestamos.length > 0" class="table-responsive mt-4">
+    <table class="table table-hover table-bordered align-middle">
+      <thead class="table-primary">
+        <tr>
+          <th>Número de documento</th>
+          <th>Título</th>
+          <th>Fecha préstamo</th>
+          <th>Fecha devolución</th>
+          <th>Fecha entrega</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let prest of prestamos">
+          <td>{{ prest.numero_documento }}</td>
+          <td>{{ prest.titulo_libro }}</td>
+          <td>{{ prest.fecha_prestamo | date: 'short' }}</td>
+          <td>{{ prest.fecha_devolucion ? (prest.fecha_devolucion | date: 'short') : '-' }}</td>
+          <td>{{ prest.fecha_entrega ? (prest.fecha_entrega | date: 'short') : '-' }}</td>
+          <td>{{ prest.estado }}</td>
+          <td>
+            <button
+              class="btn btn-sm btn-warning me-2"
+              data-bs-toggle="modal"
+              data-bs-target="#prestamoModal"
+              (click)="seleccionarParaEditar(prest)"
+            >
+              ✏️ Editar
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="eliminarPrestamo(prest._id!)">
+              🗑️ Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
 </div>
-
-
-<p *ngIf="prestamos.length === 0">No hay préstamos registrados</p>
-<table class="table table-bordered mt-3" *ngIf="prestamos.length > 0">
-  <thead>
-    <tr>
-      <th>Número de documento</th>
-      <th>Título</th>
-      <th>Fecha préstamo</th>
-      <th>Fecha devolución</th>
-      <th>Fecha entrega</th>
-      <th>Estado</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let prest of prestamos">
-      <td>{{ prest.numero_documento }}</td>
-      <td>{{ prest.titulo_libro }}</td>
-      <td>{{ prest.fecha_prestamo | date: 'short' }}</td>
-      <td>{{ prest.fecha_devolucion ? (prest.fecha_devolucion | date: 'short') : '-' }}</td>
-      <td>{{ prest.fecha_entrega ? (prest.fecha_entrega | date: 'short') : '-' }}</td>
-      <td>{{ prest.estado }}</td>
-      <td>
-        <button class="btn btn-sm btn-warning" (click)="seleccionarParaEditar(prest)">Editar</button>
-        <button class="btn btn-sm btn-danger" (click)="eliminarPrestamo(prest._id!)">Eliminar</button>
-      </td>
-    </tr>
-  </tbody>
-</table>

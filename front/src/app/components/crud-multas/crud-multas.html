@@ -1,118 +1,222 @@
-<p>¡Gestión de multas!</p>
+<div class="container mt-4">
 
-<button (click)="prepararCrear()" class="btn btn-success">Nueva multa</button>
+  <!-- Título y botón abrir modal -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <p class="fs-3 fw-bold mb-0 text-primary">¡Gestión de multas!</p>
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#multaModal" (click)="prepararCrear()">
+      📝 Nueva multa
+    </button>
+  </div>
 
-<div *ngIf="mostrarFormulario" class="mt-3">
-  <form (ngSubmit)="guardar()" enctype="multipart/form-data">
-    <div>
-      <label>Número de documento:</label>
-      <input
-        type="text"
-        [(ngModel)]="multaForm.numero_documento"
-        name="numero_documento"
-        required
-      />
+  <!-- Modal para formulario -->
+  <div class="modal fade" id="multaModal" tabindex="-1" aria-labelledby="multaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+
+        <form (ngSubmit)="guardar()" #formMulta="ngForm" novalidate>
+          <div class="modal-header">
+            <h5 class="modal-title" id="multaModalLabel">{{ editando ? 'Editar multa' : 'Crear multa' }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="row g-3">
+
+              <div class="col-md-6">
+                <label for="numeroDocumento" class="form-label">Número de documento</label>
+                <input
+                  type="text"
+                  id="numeroDocumento"
+                  class="form-control"
+                  required
+                  [(ngModel)]="multaForm.numero_documento"
+                  name="numero_documento"
+                  #numeroDocumento="ngModel"
+                />
+                <div *ngIf="numeroDocumento.invalid && numeroDocumento.touched" class="text-danger small">
+                  Campo obligatorio.
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="tituloLibro" class="form-label">Título del libro</label>
+                <input
+                  type="text"
+                  id="tituloLibro"
+                  class="form-control"
+                  required
+                  [(ngModel)]="multaForm.titulo_libro"
+                  name="titulo_libro"
+                  #tituloLibro="ngModel"
+                />
+                <div *ngIf="tituloLibro.invalid && tituloLibro.touched" class="text-danger small">
+                  Campo obligatorio.
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="monto" class="form-label">Monto</label>
+                <input
+                  type="number"
+                  id="monto"
+                  class="form-control"
+                  required
+                  min="0"
+                  step="0.01"
+                  [(ngModel)]="multaForm.monto"
+                  name="monto"
+                  #monto="ngModel"
+                />
+                <div *ngIf="monto.invalid && monto.touched" class="text-danger small">
+                  Introduce un monto válido.
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="fechaPrestamo" class="form-label">Fecha de préstamo</label>
+                <input
+                  type="date"
+                  id="fechaPrestamo"
+                  class="form-control"
+                  required
+                  [(ngModel)]="multaForm.fecha_Prestamo"
+                  name="fecha_Prestamo"
+                  #fechaPrestamo="ngModel"
+                />
+                <div *ngIf="fechaPrestamo.invalid && fechaPrestamo.touched" class="text-danger small">
+                  Campo obligatorio.
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="fechaDevolucion" class="form-label">Fecha de devolución</label>
+                <input
+                  type="date"
+                  id="fechaDevolucion"
+                  class="form-control"
+                  required
+                  [(ngModel)]="multaForm.fecha_devolucion"
+                  name="fecha_devolucion"
+                  #fechaDevolucion="ngModel"
+                />
+                <div *ngIf="fechaDevolucion.invalid && fechaDevolucion.touched" class="text-danger small">
+                  Campo obligatorio.
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="fechaLimitePago" class="form-label">Fecha límite de pago</label>
+                <input
+                  type="date"
+                  id="fechaLimitePago"
+                  class="form-control"
+                  required
+                  [(ngModel)]="multaForm.fecha_Limite_Pago"
+                  name="fecha_Limite_Pago"
+                  #fechaLimitePago="ngModel"
+                />
+                <div *ngIf="fechaLimitePago.invalid && fechaLimitePago.touched" class="text-danger small">
+                  Campo obligatorio.
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="estado" class="form-label">Estado</label>
+                <select
+                  id="estado"
+                  class="form-select"
+                  required
+                  [(ngModel)]="multaForm.estado"
+                  name="estado"
+                  #estado="ngModel"
+                >
+                  <option value="" disabled>Seleccione estado</option>
+                  <option value="pendiente">Pendiente</option>
+                  <option value="pagada">Pagada</option>
+                </select>
+                <div *ngIf="estado.invalid && estado.touched" class="text-danger small">
+                  Seleccione un estado.
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="formMulta.invalid"
+              data-bs-dismiss="modal"
+            >
+              {{ editando ? 'Actualizar multa' : 'Crear multa' }}
+            </button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+
+      </div>
     </div>
+  </div>
 
-    <div>
-      <label>Título del libro:</label>
-      <input
-        type="text"
-        [(ngModel)]="multaForm.titulo_libro"
-        name="titulo_libro"
-        required
-      />
-    </div>
+  <!-- Mensaje sin multas -->
+  <div *ngIf="multas.length === 0" class="alert alert-info text-center mt-4">
+    No hay multas registradas.
+  </div>
 
-    <div>
-      <label>Monto:</label>
-      <input
-        type="number"
-        [(ngModel)]="multaForm.monto"
-        name="monto"
-        min="0"
-        step="0.01"
-        required
-      />
-    </div>
+  <!-- Tabla de multas -->
+  <div *ngIf="multas.length > 0" class="table-responsive mt-4">
+    <table class="table table-hover table-bordered align-middle">
+      <thead class="table-primary">
+        <tr>
+          <th>Número de documento</th>
+          <th>Título del libro</th>
+          <th>Monto</th>
+          <th>Fecha Préstamo</th>
+          <th>Fecha Devolución</th>
+          <th>Fecha Límite Pago</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let multa of multas">
+          <td>{{ multa.numero_documento }}</td>
+          <td>{{ multa.titulo_libro }}</td>
+          <td>{{ multa.monto | currency:'COP':'symbol':'1.0-2' }}</td>
+          <td>{{ multa.fecha_Prestamo | date:'shortDate' }}</td>
+          <td>{{ multa.fecha_devolucion | date:'shortDate' }}</td>
+          <td>{{ multa.fecha_Limite_Pago | date:'shortDate' }}</td>
+          <td>
+            <span
+              class="badge"
+              [ngClass]="{
+                'bg-warning text-dark': multa.estado === 'pendiente',
+                'bg-success': multa.estado === 'pagada'
+              }"
+            >
+              {{ multa.estado | titlecase }}
+            </span>
+          </td>
+          <td>
+            <button
+              class="btn btn-sm btn-warning me-2"
+              data-bs-toggle="modal"
+              data-bs-target="#multaModal"
+              (click)="editar(multa)"
+            >
+              ✏️ Editar
+            </button>
+            <button
+              class="btn btn-sm btn-danger"
+              (click)="eliminar(multa._id!)"
+            >
+              🗑️ Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-    <div>
-      <label>Fecha de préstamo:</label>
-      <input
-        type="date"
-        [(ngModel)]="multaForm.fecha_Prestamo"
-        name="fecha_Prestamo"
-        required
-      />
-    </div>
-
-    <div>
-      <label>Fecha de devolución:</label>
-      <input
-        type="date"
-        [(ngModel)]="multaForm.fecha_devolucion"
-        name="fecha_devolucion"
-        required
-      />
-    </div>
-
-    <div>
-      <label>Fecha límite de pago:</label>
-      <input
-        type="date"
-        [(ngModel)]="multaForm.fecha_Limite_Pago"
-        name="fecha_Limite_Pago"
-        required
-      />
-    </div>
-
-    <div>
-      <label>Estado:</label>
-      <select [(ngModel)]="multaForm.estado" name="estado" required>
-        <option value="pendiente">Pendiente</option>
-        <option value="pagada">Pagada</option>
-      </select>
-    </div>
-
-    <div class="mt-3">
-      <button type="submit" class="btn btn-primary">
-        {{ editando ? 'Actualizar multa' : 'Crear multa' }}
-      </button>
-      <button type="button" class="btn btn-secondary" (click)="cancelar()">
-        Cancelar
-      </button>
-    </div>
-  </form>
 </div>
-
-<p *ngIf="multas.length === 0" class="mt-3">No hay multas registradas</p>
-
-<table class="table table-bordered mt-3" *ngIf="multas.length > 0">
-  <thead>
-    <tr>
-      <th>Número de documento</th>
-      <th>Título del libro</th>
-      <th>Monto</th>
-      <th>Fecha Préstamo</th>
-      <th>Fecha Devolución</th>
-      <th>Fecha Límite Pago</th>
-      <th>Estado</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let multa of multas">
-      <td>{{ multa.numero_documento }}</td>
-      <td>{{ multa.titulo_libro }}</td>
-      <td>{{ multa.monto | currency:'COP':'symbol':'1.0-2' }}</td>
-      <td>{{ multa.fecha_Prestamo | date:'shortDate' }}</td>
-      <td>{{ multa.fecha_devolucion | date:'shortDate' }}</td>
-      <td>{{ multa.fecha_Limite_Pago | date:'shortDate' }}</td>
-      <td>{{ multa.estado }}</td>
-      <td>
-        <button class="btn btn-sm btn-warning" (click)="editar(multa)">Editar</button>
-        <button class="btn btn-sm btn-danger" (click)="eliminar(multa._id!)">Eliminar</button>
-      </td>
-    </tr>
-  </tbody>
-</table>

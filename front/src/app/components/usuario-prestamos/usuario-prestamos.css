@@ -1,0 +1,117 @@
+/* Contenedor y formateo general */
+.mb-3 {
+  max-width: 450px;
+  margin: 0 auto 1.5rem auto;
+}
+
+/* Label */
+.mb-3 label {
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: #2c3e50;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+/* Input form-control mejorado */
+input.form-control {
+  padding: 0.65rem 1rem;
+  font-size: 1.1rem;
+  border: 2px solid #4a90e2;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.25);
+  transition: all 0.35s ease;
+}
+
+input.form-control:focus {
+  border-color: #1c4db7;
+  box-shadow: 0 4px 12px rgba(28, 77, 183, 0.5);
+  background-color: #f0f7ff;
+  outline: none;
+}
+
+/* Botón consultar */
+.btn-primary {
+  display: block;
+  margin: 0 auto 2rem auto;
+  background: linear-gradient(45deg, #1e90ff, #3b82f6);
+  border: none;
+  font-weight: 700;
+  font-size: 1.15rem;
+  padding: 0.7rem 2.2rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 14px rgba(30, 144, 255, 0.5);
+  transition: all 0.35s ease;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(45deg, #3b82f6, #1e90ff);
+  box-shadow: 0 9px 20px rgba(59, 130, 246, 0.7);
+  transform: translateY(-3px);
+}
+
+/* Mensaje advertencia */
+.text-warning {
+  max-width: 450px;
+  margin: 0 auto 1.5rem auto;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-align: center;
+  color: #f39c12; /* naranja dorado */
+  text-shadow: 0 0 4px rgba(243, 156, 18, 0.6);
+}
+
+/* Tabla estilizada */
+table.table {
+  max-width: 950px;
+  margin: 0 auto 3rem auto;
+  border-collapse: separate;
+  border-spacing: 0 12px; /* espacio entre filas para efecto card */
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Cabecera con fondo degradado y letras claras */
+table.table thead {
+  background: linear-gradient(90deg, #1e90ff, #3b82f6);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+}
+
+/* Celdas con fondo blanco y sombra suave */
+table.table th,
+table.table td {
+  padding: 1rem 1.6rem;
+  background-color: #fff;
+  border: none;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+  border-radius: 10px;
+  vertical-align: middle;
+  transition: background-color 0.3s ease;
+}
+
+/* Filas pares con fondo ligeramente azul */
+table.table tbody tr:nth-child(even) td {
+  background-color: #f3f8ff;
+}
+
+/* Hover para filas */
+table.table tbody tr:hover td {
+  background-color: #d6e4ff;
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.25);
+  cursor: pointer;
+}
+
+/* Mensaje cuando no hay préstamos */
+p:not(.text-warning) {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #555;
+  font-style: italic;
+  margin-top: 2rem;
+}

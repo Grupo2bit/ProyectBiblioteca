@@ -1,0 +1,91 @@
+/* Contenedor input + botón */
+div {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Input */
+input.form-control {
+  max-width: 300px;
+  padding: 0.6rem 1rem;
+  font-size: 1.1rem;
+  border: 2px solid #4a90e2;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(74, 144, 226, 0.25);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input.form-control:focus {
+  border-color: #1c4db7;
+  box-shadow: 0 4px 12px rgba(28, 77, 183, 0.5);
+  background-color: #f0f7ff;
+  outline: none;
+}
+
+/* Botón */
+button.btn-primary {
+  padding: 0.55rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: 0 5px 12px rgba(30, 144, 255, 0.4);
+  transition: background 0.35s ease, box-shadow 0.35s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+button.btn-primary:hover {
+  background: linear-gradient(45deg, #3b82f6, #1e90ff);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.6);
+  transform: translateY(-3px);
+}
+
+/* Mensaje de error */
+p.text-danger {
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+/* Tabla */
+table.table {
+  max-width: 800px;
+  margin: 1rem auto 2rem auto;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.07);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Encabezado */
+table.table thead {
+  background: linear-gradient(90deg, #1e90ff, #3b82f6);
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+}
+
+/* Celdas */
+table.table th,
+table.table td {
+  background-color: #fff;
+  padding: 1rem 1.5rem;
+  border: none;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+/* Filas pares */
+table.table tbody tr:nth-child(even) td {
+  background-color: #f3f8ff;
+}
+
+/* Hover filas */
+table.table tbody tr:hover td {
+  background-color: #d6e4ff;
+  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.25);
+  cursor: pointer;
+}
