@@ -9,11 +9,13 @@ import { CrudPrestamos } from './components/crud-prestamos/crud-prestamos';
 import { UsuarioMultasComponent } from './components/usuario-multas/usuario-multas';
 import { UsuarioNotificacionesComponent } from './components/usuario-notificaciones/usuario-notificaciones';
 import { UsuarioSolicitudComponent } from './components/usuario-solicitud/usuario-solicitud';
+import { CrudPreSolicitud } from './components/crud-pre-solicitud/crud-pre-solicitud';
 import { Home } from './components/home/home';
 import { Login } from './components/login/login';
 import { CrudLibros } from './components/crud-libros/crud-libros';
 import { Panel } from './components/panel/panel';
 import { CrudResenas } from './components/crud-resenas/crud-resenas';
+import { ConsultarLibrosComponent } from './components/consultar-libros/consultar-libros';
 
 
 export const routes: Routes = [
@@ -24,12 +26,14 @@ export const routes: Routes = [
   { path: 'prestamos', component: CrudPrestamos},
   {path: 'libros', title: 'Libros', component: CrudLibros},
   {path: 'resenas', title: 'Resenas', component: CrudResenas},
-   { path: 'sprestamos', component: CrudSolicitudPrestamoComponent},
+  { path: 'sprestamos', component: CrudSolicitudPrestamoComponent},
+  { path: 'dashboard/solicitud-usuario', component: CrudPreSolicitud},
   { path: 'notificaciones', component: CrudNotificacionesComponent },
   {path: 'dashboard/prestamos',component: UsuarioPrestamosComponent},
   {path: 'dashboard/multas',component: UsuarioMultasComponent},
   {path: 'dashboard/notificaciones',component: UsuarioNotificacionesComponent},
   {path: 'dashboard/solicitudprestamos',component: UsuarioSolicitudComponent },
+  {path: 'dashboard/consultarLibros',component: ConsultarLibrosComponent },
   { path: 'multas', component: CrudMultasComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', title: '404|Page Not Found', component: PageNotFound } // Ruta de respaldo

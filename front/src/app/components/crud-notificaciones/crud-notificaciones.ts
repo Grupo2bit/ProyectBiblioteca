@@ -23,13 +23,13 @@ export class CrudNotificacionesComponent implements OnInit {
   editando = false;
   idEditar: string | null = null;
 
-  mostrarFormulario = true;  // <-- por defecto visible
+  mostrarFormulario = true;  // Siempre visible
 
   constructor(private servicio: NotificacionesService) {}
 
   ngOnInit(): void {
     this.cargarNotificaciones();
-    this.cancelar();  // inicializa el formulario para crear
+    this.cancelar();
   }
 
   prepararCrear() {
@@ -38,14 +38,14 @@ export class CrudNotificacionesComponent implements OnInit {
   }
 
   cargarNotificaciones() {
-    this.servicio.getAll().subscribe({
-      next: (notifs) => {
-        console.log('Datos recibidos del backend:', notifs);
-        this.notificaciones = notifs || [];
-      },
-      error: (err) => console.error('Error al cargar notificaciones', err)
-    });
-  }
+  this.servicio.getAll().subscribe({
+    next: (notifs) => {
+      this.notificaciones = notifs || [];
+    },
+    error: (err) => console.error('Error al cargar notificaciones:', err)
+  });
+}
+
 
   guardar() {
     if (this.editando && this.idEditar) {
@@ -64,11 +64,25 @@ export class CrudNotificacionesComponent implements OnInit {
   }
 
   editar(notif: Notificaciones) {
-    this.notificacionForm = { ...notif };
-    this.editando = true;
-    this.idEditar = notif._id || null;
-    this.mostrarFormulario = true;
+  this.editando = true;
+  this.idEditar = notif._id || null;
+
+  // Convertir fecha_envio a formato para datetime-local
+  let fechaFormatted = '';
+  if (notif.fecha_envio) {
+    const fecha = new Date(notif.fecha_envio);
+    // Obtener string con formato: "YYYY-MM-DDTHH:mm"
+    fechaFormatted = fecha.toISOString().slice(0, 16);
   }
+
+  this.notificacionForm = {
+    ...notif,
+    fecha_envio: fechaFormatted
+  };
+
+  this.mostrarFormulario = true;
+}
+
 
   eliminar(id: string) {
     this.servicio.eliminar(id).subscribe(() => {
@@ -86,7 +100,5 @@ export class CrudNotificacionesComponent implements OnInit {
     };
     this.editando = false;
     this.idEditar = null;
-    // Aquí no cierres el formulario si quieres que siempre esté visible al iniciar
-    // this.mostrarFormulario = false;
   }
 }

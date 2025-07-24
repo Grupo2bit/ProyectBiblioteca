@@ -1,53 +1,70 @@
-<h2>Bienvenido, {{ usuario?.name }}</h2>
-<p>Tu rol es: <strong>{{ usuario?.role }}</strong></p>
+<div class="container py-4">
+  <h2 class="mb-3 text-primary fw-bold">Bienvenido, {{ usuario?.name }}</h2>
+  <p class="lead">
+    Tu rol es: <strong class="text-info">{{ usuario?.role }}</strong>
+  </p>
 
-
-<div *ngIf="isAdmin">
-  <h3>Opciones para Administrador</h3>
-  <ul class="list-group">
-    <li class="list-group-item">
-        <a routerLink="/libros">📖 Gestión de Libros</a>
+  <div *ngIf="isAdmin" class="mt-4">
+    <h3 class="mb-3 text-success fw-semibold">Opciones para Administrador</h3>
+    <ul class="list-group shadow-sm rounded">
+      <li class="list-group-item d-flex align-items-center gap-3">
+        <span class="fs-4">📚</span>
+        <a routerLink="/libros" class="text-decoration-none flex-grow-1">Gestión Libros</a>
       </li>
-    <li class="list-group-item">
-      <a routerLink="/sprestamos">📚 Solicitudes de Préstamos</a>
-    </li>
-    <li class="list-group-item">
-      <a routerLink="/multas">💰 Gestión de Multas</a>
-    </li>
-    <li class="list-group-item">
-      <a routerLink="/notificaciones">🔔 Gestión de Notificaciones</a>
-    </li>
-    <li class="list-group-item">
-      <a routerLink="/prestamos">📖 Gestión de Préstamos</a>
-    </li>
-    
-  </ul>
-  
-</div>
-
-
-<div *ngIf="!isAdmin">
-  <h3>Opciones para Usuario</h3>
-  <ul class="list-group">
-    <li class="list-group-item">
-      <a routerLink="/dashboard/libros">📘 Consultar libros</a>
-    </li>
-    <li class="list-group-item">
-      <a routerLink="/dashboard/prestamos">📚 Ver mis Préstamos</a>
-    </li>
-    <li class="list-group-item">
-      <a routerLink="/dashboard/multas">💰 Ver mis Multas</a>
-    </li>
-    <li class="list-group-item">
-      <a routerLink="/dashboard/notificaciones">🔔 Ver mis Notificaciones</a>
-    </li>
-    <li class="list-group-item">
-      <a routerLink="/dashboard/solicitudprestamos">✍️ Ver mis Solicitudes de Préstamo</a>
-    </li>
-    <li class="list-group-item">
-        <a routerLink="/resenas">📖 Crear Reseña</a>
+      <li class="list-group-item d-flex align-items-center gap-3">
+        <span class="fs-4">📚</span>
+        <a routerLink="/sprestamos" class="text-decoration-none flex-grow-1">Solicitudes de Préstamos</a>
       </li>
-  </ul>
-</div>
+      <li class="list-group-item d-flex align-items-center gap-3">
+        <span class="fs-4">💰</span>
+        <a routerLink="/multas" class="text-decoration-none flex-grow-1">Gestión de Multas</a>
+      </li>
+      <li class="list-group-item d-flex align-items-center gap-3">
+        <span class="fs-4">🔔</span>
+        <a routerLink="/notificaciones" class="text-decoration-none flex-grow-1">Gestión de Notificaciones</a>
+      </li>
+      <li class="list-group-item d-flex align-items-center gap-3">
+        <span class="fs-4">📖</span>
+        <a routerLink="/prestamos" class="text-decoration-none flex-grow-1">Gestión de Préstamos</a>
+      </li>
+      <li class="list-group-item d-flex align-items-center gap-3">
+        <span class="fs-4">✍️</span>
+        <a routerLink="/" class="text-decoration-none flex-grow-1">Gestión de Reseñas</a>
+      </li>
+    </ul>
+  </div>
 
-<button class="btn btn-danger mt-3" (click)="cerrarSesion()">Cerrar sesión</button>
+  <div *ngIf="!isAdmin" class="mt-4">
+    <h3 class="mb-3 text-warning fw-semibold">Opciones para Usuario</h3>
+    <ul class="list-group shadow-sm rounded">
+      <li class="list-group-item d-flex align-items-center gap-3">
+        <span class="fs-4">📘</span>
+        <a routerLink="/dashboard/consultarLibros" class="text-decoration-none flex-grow-1">Consultar libros</a>
+      </li>
+      <li class="list-group-item d-flex align-items-center gap-3">
+        <span class="fs-4">📚</span>
+        <a routerLink="/dashboard/prestamos" class="text-decoration-none flex-grow-1">Ver mis Préstamos</a>
+      </li>
+      <li class="list-group-item d-flex align-items-center gap-3">
+        <span class="fs-4">💰</span>
+        <a routerLink="/dashboard/multas" class="text-decoration-none flex-grow-1">Ver mis Multas</a>
+      </li>
+      <li class="list-group-item d-flex align-items-center gap-3">
+        <span class="fs-4">🔔</span>
+        <a routerLink="/dashboard/notificaciones" class="text-decoration-none flex-grow-1">Ver mis Notificaciones</a>
+      </li>
+      <li class="list-group-item d-flex align-items-center gap-3">
+        <span class="fs-4">✍️</span>
+        <a routerLink="dashboard/solicitud-usuario" class="text-decoration-none flex-grow-1">Crear una solicitud de Préstamo</a>
+      </li>
+      <li class="list-group-item d-flex align-items-center gap-3">
+        <span class="fs-4">✍️</span>
+        <a routerLink="/dashboard/solicitudprestamos" class="text-decoration-none flex-grow-1">Ver mis Solicitudes de Préstamo</a>
+      </li>
+    </ul>
+  </div>
+
+  <button class="btn btn-danger mt-4 w-100 fw-bold" (click)="cerrarSesion()">
+    Cerrar sesión
+  </button>
+</div>

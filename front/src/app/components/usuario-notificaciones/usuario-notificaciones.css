@@ -1,0 +1,109 @@
+/* Contenedor principal */
+div {
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Input del número de documento */
+input[type="text"] {
+  padding: 0.65rem 1rem;
+  font-size: 1.1rem;
+  border: 2px solid #4a90e2;
+  border-radius: 8px;
+  width: 280px;
+  box-shadow: 0 2px 6px rgba(74, 144, 226, 0.25);
+  transition: all 0.4s ease;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: #1c4db7;
+  box-shadow: 0 4px 12px rgba(28, 77, 183, 0.5);
+  background-color: #f0f7ff;
+}
+
+/* Botón Buscar */
+button {
+  background: linear-gradient(45deg, #1e90ff, #3b82f6);
+  color: white;
+  border: none;
+  padding: 0.7rem 1.6rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(30, 144, 255, 0.5);
+  transition: all 0.35s ease;
+}
+
+button:hover {
+  background: linear-gradient(45deg, #3b82f6, #1e90ff);
+  box-shadow: 0 8px 18px rgba(59, 130, 246, 0.7);
+  transform: translateY(-3px);
+}
+
+/* Mensaje */
+p {
+  margin-top: 1rem;
+  font-weight: 700;
+  color: #e74c3c; /* rojo intenso para alertas */
+  text-align: center;
+  font-size: 1.1rem;
+  text-shadow: 0 0 4px rgba(231, 76, 60, 0.6);
+}
+
+/* Tabla */
+table.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px; /* espacio entre filas para efecto card */
+  margin-top: 1.5rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Cabecera con fondo degradado */
+table.table thead {
+  background: linear-gradient(90deg, #1e90ff, #3b82f6);
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+}
+
+/* Celdas con sombra y fondo blanco */
+table.table th,
+table.table td {
+  padding: 1rem 1.5rem;
+  background-color: #ffffff;
+  border: none;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  vertical-align: middle;
+  transition: background-color 0.3s ease;
+}
+
+/* Color de filas alternas con sombra */
+table.table tbody tr:nth-child(even) td {
+  background-color: #f3f8ff;
+}
+
+/* Efecto hover en filas */
+table.table tbody tr:hover td {
+  background-color: #d6e4ff;
+  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.2);
+  cursor: pointer;
+}
+
+/* Ajuste para la columna monto para que sea más visible */
+table.table td:nth-child(3) {
+  font-weight: 700;
+  color: #2563eb;
+  text-align: right;
+}

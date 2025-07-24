@@ -60,11 +60,35 @@ export class CrudPrestamos implements OnInit {
     });
   }
 
-  seleccionarParaEditar(prestamo: Prestamo): void {
-    this.modo = 'editar';
-    this.prestamoForm = { ...prestamo };
-    this.mostrarFormulario = true;
-  }
+ seleccionarParaEditar(prestamo: Prestamo): void {
+  this.modo = 'editar';
+
+  const formatearFechaHoraLocal = (fecha?: string | null): string => {
+    if (!fecha) return '';
+    const dt = new Date(fecha);
+    if (isNaN(dt.getTime())) return '';
+
+    // Obtener fecha y hora con dos dígitos
+    const yyyy = dt.getFullYear();
+    const mm = String(dt.getMonth() + 1).padStart(2, '0');
+    const dd = String(dt.getDate()).padStart(2, '0');
+    const hh = String(dt.getHours()).padStart(2, '0');
+    const min = String(dt.getMinutes()).padStart(2, '0');
+
+    return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+  };
+
+  this.prestamoForm = {
+    ...prestamo,
+    fecha_prestamo: formatearFechaHoraLocal(prestamo.fecha_prestamo),
+    fecha_devolucion: formatearFechaHoraLocal(prestamo.fecha_devolucion),
+    fecha_entrega: formatearFechaHoraLocal(prestamo.fecha_entrega),
+  };
+
+  this.mostrarFormulario = true;
+}
+
+
 
   actualizarPrestamo(): void {
     if (!this.prestamoForm._id) return;
@@ -78,7 +102,7 @@ export class CrudPrestamos implements OnInit {
   }
 
   eliminarPrestamo(id: string): void {
-    if (!confirm('Â¿Seguro que quieres eliminar?')) return;
+    if (!confirm('¿Seguro que quieres eliminar?')) return;
     this.prestamosService.delete(id).subscribe({
       next: () => this.obtenerPrestamos(),
       error: (e) => console.error('Error al eliminar', e)
