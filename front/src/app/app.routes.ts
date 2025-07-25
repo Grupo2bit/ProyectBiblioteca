@@ -20,13 +20,9 @@ import { UsuarioPrestamosComponent } from './components/usuario-prestamos/usuari
 import { UsuarioMultasComponent } from './components/usuario-multas/usuario-multas';
 import { UsuarioNotificacionesComponent } from './components/usuario-notificaciones/usuario-notificaciones';
 import { UsuarioSolicitudComponent } from './components/usuario-solicitud/usuario-solicitud';
-import { Home } from './components/home/home';
-import { Login } from './components/login/login';
-import { CrudLibros } from './components/crud-libros/crud-libros';
-import { Panel } from './components/panel/panel';
-import { CrudResenas } from './components/crud-resenas/crud-resenas';
-
 import { PageNotFound } from './components/page-not-found/page-not-found';
+import { ConsultarLibrosComponent } from './components/consultar-libros/consultar-libros';
+import { CrudPreSolicitud } from './components/crud-pre-solicitud/crud-pre-solicitud';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -40,10 +36,24 @@ export const routes: Routes = [
    { path: 'sprestamos', component: CrudSolicitudPrestamoComponent},
   { path: 'notificaciones', component: CrudNotificacionesComponent },
   {path: 'dashboard/prestamos',component: UsuarioPrestamosComponent},
+  {path: 'dashboard/consultarLibros',component: ConsultarLibrosComponent},
+  { path: 'register', title: 'Registro', component: RegisterComponent },
+  { path: 'forgot-password', title: 'Recuperar contraseña', component: ForgotPasswordComponent },
+  { path: 'reset-password', title: 'Reiniciar contraseña', component: ResetPasswordComponent },
+      {
+  path: 'panel',
+  component: CrudPreSolicitud,
+  children: [
+    {
+      path: 'dashboard/solicitud-usuario',
+      component: CrudPreSolicitud
+    }
+  ]
+},
   {path: 'dashboard/multas',component: UsuarioMultasComponent},
   {path: 'dashboard/notificaciones',component: UsuarioNotificacionesComponent},
   {path: 'dashboard/solicitudprestamos',component: UsuarioSolicitudComponent },
   { path: 'multas', component: CrudMultasComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: '**', title: '404|Page Not Found', component: PageNotFound } // Ruta de respaldo
+  { path: '**', title: '404|Page Not Found', component: PageNotFound } 
 ];

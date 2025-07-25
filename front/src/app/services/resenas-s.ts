@@ -13,11 +13,11 @@ export class ResenasS {
   getAll():Observable<Resenas[]>{
     return this.http.get<ApiResena>(this.API_URL).pipe(map(resp=> resp.data));
   }
-  crear(formData: FormData): Observable<any>{
-    return this.http.post('http://localhost:3000/resenas', formData);
+  crear(data: Resenas): Observable<any>{
+    return this.http.post('http://localhost:3000/resenas', data);
   }
 
-  actualizar(id:string, data:FormData):Observable<any>{
+  actualizar(id:string, data:Resenas):Observable<any>{
     return this.http.put(`http://localhost:3000/resenas/${id}`, data);
   }
 

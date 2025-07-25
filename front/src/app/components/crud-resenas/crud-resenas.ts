@@ -3,6 +3,8 @@ import { ResenasS } from '../../services/resenas-s';
 import { Resenas } from '../../interfaces/resenas';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LibroS } from '../../services/libro-s';
+import { Libros } from '../../interfaces/libros';
 
 @Component({
   selector: 'app-crud-resenas',
@@ -12,151 +14,116 @@ import { FormsModule } from '@angular/forms';
 })
 export class CrudResenas implements OnInit {
   resenas: Resenas[] = [];
-  imagenBaseUrl = 'http://localhost:3000/imagenes/';
+  libros: Libros[] = [];
   mostrarFormulario = false;
-  resenaForm: Resenas= this.resetResena();
-  
+  resenaForm: Resenas = this.resetResena();
   modo: 'crear' | 'editar' = 'crear';
-  
-  constructor(private resenasService:ResenasS,
-    private cdr:ChangeDetectorRef
-  ){}
-  
-  // metodo para cargar las resenas en la tabla
-  obtenerResenas():void{
-    this.resenasService.getAll().subscribe({
-      next:(resp)=>{
-        this.resenas=resp;
-        this.cdr.detectChanges();
-      },
-      error:(err)=>console.error("Error al cargar las resenas", err)
-    });
-  }
+
+  constructor(
+    private resenasService: ResenasS,
+    private librosService: LibroS,
+    private cdr: ChangeDetectorRef
+  ) {}
+
   ngOnInit(): void {
     this.obtenerResenas();
+    this.obtenerLibros();
   }
-  
-  //metodo previo para poder cargar el metodo de crear Resena
-  
-  selectedFile! : File;
-  
-  onFileSelected(event:any):void{
-    const file: File = event.target.file[0];
-    if(file){
-      this.selectedFile = file;
-    }
+
+  obtenerResenas(): void {
+    this.resenasService.getAll().subscribe({
+      next: (resp) => {
+        this.resenas = resp;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error al cargar las reseñas', err)
+    });
   }
-  
-  // metodo para crear producto
-  
-  crearResena():void{
-    if(!this.selectedFile){
-      alert("Por favor selecciona una imagen");
-      return;
-    }
-    const formData = new FormData();
-    formData.append('numero_documento', this.resenaForm.numero_documento.toString());
-    formData.append('titulo_libro',this.resenaForm.titulo_Libro);
-    formData.append('calificacion', this.resenaForm.calificacion.toString());
-    formData.append('comentario', this.resenaForm.comentario);
-    formData.append('fecha', this.resenaForm.fecha.toString());
-    formData.append('estado', this.resenaForm.estado);
-    formData.append('imagen', this.selectedFile);
-  
-    this.resenasService.crear(formData).subscribe({
-      next:()=>{
+
+  obtenerLibros(): void {
+    this.librosService.getAll().subscribe({
+      next: (data) => {
+        this.libros = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error al cargar los libros', err)
+    });
+  }
+
+  crearResena(): void {
+    this.resenasService.crear(this.resenaForm).subscribe({
+      next: () => {
         alert('Reseña creada correctamente');
         this.resenaForm = this.resetResena();
-        this.selectedFile = undefined!;
         this.mostrarFormulario = false;
         this.obtenerResenas();
         this.cdr.detectChanges();
       },
-      error:(err)=>{
-        console.error("Error al cargar las resenas", err);
-        alert('Error al cargar las resenas');
+      error: (err) => {
+        console.error('Error al crear la reseña', err);
+        alert('Error al crear la reseña');
       }
     });
   }
-  // metodo previo al metodo para actualizar
-  
-  resetResena():Resenas{
-    return{
-      numero_documento:0,
-      titulo_Libro:'',
-      calificacion:0,
-      comentario: '',
-      fecha:'',
-      estado:'',
-    };
-  }
-  
-  seleccionarParaEditar(resena:Resenas):void{
-    this.modo = 'editar';
-    this.resenaForm = {...resena};
-    this.mostrarFormulario = true;
-  }
-  prepararCrear():void{
-    this.modo='crear';
-    this.resenaForm = this.resetResena();
-    this.mostrarFormulario = true;
-  }
-  
-  cancelarFormulario():void{
-    this.mostrarFormulario = false;
-  }
-  
-  // metodo para actualizar
-  actualizarResena():void{
-    if(!this.resenaForm._id){
-      alert('No se encontro el ID de la resena');
+
+  actualizarResena(): void {
+    if (!this.resenaForm._id) {
+      alert('No se encontró el ID de la reseña');
       return;
     }
-  // previo de los datos que espero recibir
-    const formData = new FormData();
-    formData.append('numero_documento', this.resenaForm.numero_documento.toString());
-    formData.append('titulo_libro',this.resenaForm.titulo_Libro);
-    formData.append('calificacion', this.resenaForm.calificacion.toString());
-    formData.append('comentario', this.resenaForm.comentario);
-    formData.append('fecha', this.resenaForm.fecha.toString());
-    formData.append('estado', this.resenaForm.estado);
-    formData.append('imagen', this.selectedFile);
-  
-    //solo agregamos nueva imagen si selecciono alguna
-    if(this.selectedFile){
-      formData.append('imagen', this.selectedFile);
-    }
-    this.resenasService.actualizar(this.resenaForm._id,formData).subscribe({
-      next:()=>{
-        alert("Producto actualizado correctamente");
-        this.obtenerResenas();
+
+    this.resenasService.actualizar(this.resenaForm._id, this.resenaForm).subscribe({
+      next: () => {
+        alert('Reseña actualizada correctamente');
         this.resenaForm = this.resetResena();
-        this.selectedFile = undefined!;
         this.mostrarFormulario = false;
         this.obtenerResenas();
         this.cdr.detectChanges();
-  
       },
-      error:(err)=>{
-        console.log("Error al actualizar la resena");
-        alert("Error al actualizar la resena")
+      error: (err) => {
+        console.error('Error al actualizar la reseña', err);
+        alert('Error al actualizar la reseña');
       }
     });
   }
-  
-  //metodo para eliminar producto
-  
-  eliminarResena(id:string):void{
-    if(confirm("Estas seguro de eliminar la resena?")){
+
+  eliminarResena(id: string): void {
+    if (confirm('¿Estás seguro de eliminar la reseña?')) {
       this.resenasService.delete(id).subscribe({
-        next:(resp)=>{
-          alert("Resena eliminado exitosamente");
-          this.resenas = resp;
+        next: () => {
+          alert('Reseña eliminada exitosamente');
           this.obtenerResenas();
           this.cdr.detectChanges();
         },
-        error:(err)=> console.error("Error al eliminar", err)
+        error: (err) => console.error('Error al eliminar', err)
       });
     }
+  }
+
+  resetResena(): Resenas {
+    return {
+      numero_documento: 0,
+      titulo_Libro: '',
+      calificacion: 0,
+      comentario: '',
+      fecha: '',
+      estado: 'registrado'
+    };
+  }
+
+  seleccionarParaEditar(resena: Resenas): void {
+    this.modo = 'editar';
+    this.resenaForm = { ...resena };
+    this.mostrarFormulario = true;
+  }
+
+  prepararCrear(): void {
+    this.modo = 'crear';
+    this.resenaForm = this.resetResena();
+    this.mostrarFormulario = true;
+  }
+
+  cancelarFormulario(): void {
+    this.mostrarFormulario = false;
   }
 }
