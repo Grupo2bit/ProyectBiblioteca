@@ -7,7 +7,7 @@ import { ApiMultas, Multa } from '../interfaces/multas';
   providedIn: 'root'
 })
 export class MultasService {
-  private apiUrl = 'http://backend:3000/multas';
+  private apiUrl = 'myback/multas';
 
   constructor(private http: HttpClient) {}
 

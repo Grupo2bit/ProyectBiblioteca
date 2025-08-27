@@ -6,7 +6,7 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root'
 })
 export class ResenasS {
-  private API_URL = 'http://backend:3000/resenas/';
+  private API_URL = 'myback/resenas/';
 
   constructor(private http: HttpClient) { }
 
@@ -14,14 +14,14 @@ export class ResenasS {
     return this.http.get<ApiResena>(this.API_URL).pipe(map(resp=> resp.data));
   }
   crear(data: Resenas): Observable<any>{
-    return this.http.post('http://backend:3000/resenas', data);
+    return this.http.post('myback/resenas', data);
   }
 
   actualizar(id:string, data:Resenas):Observable<any>{
-    return this.http.put(`http://backend:3000/resenas/${id}`, data);
+    return this.http.put(`myback/resenas/${id}`, data);
   }
 
   delete(id:string): Observable<any>{
-    return this.http.delete(`http://backend:3000/resenas/${id}`);
+    return this.http.delete(`myback/resenas/${id}`);
   }
 }

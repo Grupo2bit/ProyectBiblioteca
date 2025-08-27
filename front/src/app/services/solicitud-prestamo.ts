@@ -7,7 +7,7 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root'
 })
 export class SolicitudPrestamoService {
-  private url = 'http://backend:3000/solicitarPrestamos';
+  private url = 'myback/solicitarPrestamos';
 
   constructor(private http: HttpClient) {}
 

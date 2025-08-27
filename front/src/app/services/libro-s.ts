@@ -8,7 +8,7 @@ import { HttpParams } from '@angular/common/http';
   providedIn: 'root'
 })
 export class LibroS {
-  private API_URL = 'http://backend:3000/libros/';
+  private API_URL = 'myback/libros/';
 
   constructor(private http: HttpClient) { }
 
@@ -29,15 +29,15 @@ export class LibroS {
   }
   
   crear(formData: FormData): Observable<any>{
-    return this.http.post('http://backend:3000/libros', formData);
+    return this.http.post('myback/libros', formData);
   }
 
   actualizar(id:string, data:FormData):Observable<any>{
-    return this.http.put(`http://backend:3000/libros/${id}`, data);
+    return this.http.put(`myback/libros/${id}`, data);
   }
 
   delete(id:string): Observable<any>{
-    return this.http.delete(`http://backend:3000/libros/${id}`);
+    return this.http.delete(`myback/libros/${id}`);
   }
 }
 

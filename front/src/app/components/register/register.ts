@@ -39,7 +39,7 @@ export class RegisterComponent {
       return;
     }
 
-   this.http.post('http://backend:3000/api/usuarios/register', this.form.value)
+   this.http.post('myback/api/usuarios/register', this.form.value)
   .subscribe({
     next: () => {
       alert('Registro exitoso');
