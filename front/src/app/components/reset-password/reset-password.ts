@@ -32,7 +32,7 @@ export class ResetPasswordComponent implements OnInit {
   onSubmit() {
     if (this.form.invalid) return;
 
-    this.http.post('http://localhost:3000/api/usuarios/reset-password', {
+    this.http.post('http://backend:3000/api/usuarios/reset-password', {
       token: this.token,
       password: this.form.value.password
     }).subscribe({

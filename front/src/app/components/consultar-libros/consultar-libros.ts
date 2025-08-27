@@ -28,7 +28,7 @@ export class ConsultarLibrosComponent implements OnInit {
  consultar() {
   this.libroService.getAll(this.filtros).subscribe({
     next: (data) => {
-      const baseUrl = 'http://localhost:3000/imagenes/'; // ⚠️ cámbialo si usas otra URL
+      const baseUrl = 'http://backend:3000/imagenes/'; // ⚠️ cámbialo si usas otra URL
 
       this.libros = data.map((libro) => ({
         ...libro,

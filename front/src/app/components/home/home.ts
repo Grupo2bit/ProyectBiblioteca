@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 export class Home  implements OnInit{
   libros: any[] = [];
   filtro = { titulo: '', autor: '' };
-  imagenBaseUrl = 'http://localhost:3000/imagenes/';
+  imagenBaseUrl = 'http://backend:3000/imagenes/';
   constructor(private librosService: LibroS) {}
 
   ngOnInit() {

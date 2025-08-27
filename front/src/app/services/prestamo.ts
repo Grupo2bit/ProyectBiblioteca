@@ -8,7 +8,7 @@ import { Prestamo,ApiPrestamos } from '../interfaces/prestamo';
   providedIn: 'root',
 })
 export class PrestamosService {
-  private baseUrl = 'http://localhost:3000/prestamos'; 
+  private baseUrl = 'http://backend:3000/prestamos'; 
    constructor(private http: HttpClient) {}
 
   getAll(): Observable<Prestamo[]> {

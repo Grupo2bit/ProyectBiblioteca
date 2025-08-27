@@ -17,7 +17,7 @@ export class LoginComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   login() {
-    this.http.post<any>('http://localhost:3000/api/usuarios/login', {
+    this.http.post<any>('http://backend:3000/api/usuarios/login', {
       email: this.email,
       password: this.password
     }).subscribe({

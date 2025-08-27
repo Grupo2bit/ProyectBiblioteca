@@ -15,7 +15,7 @@ export class CrudLibros implements OnInit{
   libros: Libros[] = [];
   filtroTitulo: string = '';
 filtroAutor: string = '';
-imagenBaseUrl = 'http://localhost:3000/imagenes/';
+imagenBaseUrl = 'http://backend:3000/imagenes/';
 mostrarFormulario = false;
 libroForm: Libros= this.resetLibro();
 

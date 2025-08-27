@@ -28,7 +28,7 @@ export class ForgotPasswordComponent {
  onSubmit() {
   if (this.form.invalid) return;
 
-  this.http.post('http://localhost:3000/api/usuarios/recuperar', this.form.value)
+  this.http.post('http://backend:3000/api/usuarios/recuperar', this.form.value)
     .subscribe({
       next: () => {
         alert('Revisa tu correo para restablecer tu contraseña');

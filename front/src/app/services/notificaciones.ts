@@ -13,7 +13,7 @@ interface ApiNotificaciones {
   providedIn: 'root'
 })
 export class NotificacionesService {
-  private apiUrl = 'http://localhost:3000/notificaciones';
+  private apiUrl = 'http://backend:3000/notificaciones';
 
   constructor(private http: HttpClient) {}
 
