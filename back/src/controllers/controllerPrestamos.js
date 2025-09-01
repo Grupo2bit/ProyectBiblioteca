@@ -32,7 +32,8 @@ const controllerPrestamos ={
     },
       readPrestamo: async(sol,res)=>{
         try{
-            const PrestamoFound = await modelPrestamos.findById();
+            const { id } = sol.params;
+            const PrestamoFound = await modelPrestamos.findById(id);
             res.json({
                 result:'fine',
                 message:'Prestamo Encontrado',
